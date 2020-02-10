@@ -4,6 +4,7 @@ export class Board {
 
     constructor(currentPlayer = 1, initialGrid) {
         this.currentPlayer = currentPlayer
+        this.canMove = !(currentPlayer - 1)
         this.grid = initialGrid.map(row => [...row])
     }
 
