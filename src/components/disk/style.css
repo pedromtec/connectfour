@@ -1,0 +1,18 @@
+.disk {
+    margin: 2px 2px;
+    width: 70px;
+    height: 70px;
+    border-radius: 25px;
+}
+
+.empty {
+    background-color: white;
+}
+
+.playerOne {
+    background-color: red;
+}
+
+.playerTwo {
+    background-color: yellow;
+}
