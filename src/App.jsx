@@ -5,7 +5,7 @@ import { Grid } from "./components/grid";
 const App = () => {
   return (
     <div className="App">
-      <Grid initialPlayer={2} />
+      <Grid initialPlayer={1} />
     </div>
   );
 };

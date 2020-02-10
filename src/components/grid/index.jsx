@@ -45,6 +45,7 @@ export const Grid = props => {
       setState({ ...state });
       return milliseconds ? sleep(milliseconds) : Promise.resolve();
     });
+    console.log(state);
     setState({ ...state });
     return can;
   }

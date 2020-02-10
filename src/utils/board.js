@@ -8,10 +8,6 @@ export class Board {
         this.grid = initialGrid.map(row => [...row])
     }
 
-    getRow(row) {
-        return this.grid[row]
-    }
-
     async dropPiece(col, sleepAndRepaint) {
         let row = 0;
         while (row < ROWS && this.grid[row][col] === 0) {
