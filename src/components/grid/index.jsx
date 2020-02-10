@@ -20,27 +20,36 @@ const sleep = milliseconds => {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
 };
 
-const getMove = async () => {
-  const move = Math.floor(Math.random() * 7);
-  await sleep(300);
-  return move;
-};
-
+let canMove = true;
 export const Grid = () => {
   const [state, setState] = useState({ board: new Board(1, initialGrid) });
 
+  const getMove = async () => {
+    const move = Math.floor(Math.random() * 7);
+    await sleep(300);
+    return move;
+  };
+
   const dropPiece = async col => {
-    await state.board.dropPiece(col, milliseconds => {
+    const can = await state.board.dropPiece(col, milliseconds => {
       setState({ ...state });
       return milliseconds ? sleep(milliseconds) : Promise.resolve();
     });
     setState({ ...state });
+    return can;
   };
 
   const handleClick = async col => {
-    await dropPiece(col);
-    const aiMove = await getMove();
-    await dropPiece(aiMove);
+    if (!canMove) return;
+    canMove = false;
+    dropPiece(col).then(async droped => {
+      if (droped) {
+        const aiMove = await getMove();
+        console.log(aiMove);
+        await dropPiece(aiMove);
+      }
+      canMove = true;
+    });
   };
 
   return (
