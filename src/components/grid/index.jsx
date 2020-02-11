@@ -4,25 +4,13 @@ import "./style.css";
 import { Board } from "../../utils/board";
 import { HeaderStatus } from "../headerStatus";
 
-const initialGrid = [];
-const ROWS = 6;
-const COLUMNS = 7;
-
-for (let i = 0; i < ROWS; i++) {
-  const row = [];
-  for (let j = 0; j < COLUMNS; j++) {
-    row.push(0);
-  }
-  initialGrid.push(row);
-}
-
 const sleep = milliseconds => {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
 };
 
 export const Grid = props => {
   const [state, setState] = useState({
-    board: new Board(props.initialPlayer, initialGrid)
+    board: new Board(props.initialPlayer)
   });
 
   const getMove = async () => {
