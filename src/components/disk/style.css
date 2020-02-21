@@ -16,3 +16,7 @@
 .playerTwo {
     background-color: green;
 }
+
+.playerWinner {
+    background-color: yellow;
+}

@@ -8,8 +8,10 @@ export const Disk = props => {
     style += "playerOne";
   } else if (disk === 2) {
     style += "playerTwo";
-  } else {
+  } else if (disk === 0) {
     style += "empty";
+  } else {
+    style += "playerWinner"
   }
   return <div onClick={handleClick} className={style}></div>;
 };
