@@ -1,12 +1,12 @@
-import React from "react";
-import "./App.css";
-import { Grid } from "./components/grid";
+import React from 'react'
+import './App.css'
+import Game from './components/Game'
 
 const App = () => {
   return (
     <div className="App">
-      <Grid initialPlayer={1} />
+      <Game initialPlayer={1} />
     </div>
-  );
-};
-export default App;
+  )
+}
+export default App
