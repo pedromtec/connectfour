@@ -1,22 +1,39 @@
-.disk {
-  margin: 2px 2px;
-  width: 70px;
+.cell {
   height: 70px;
-  border-radius: 32px;
+  width: 70px;
+  background-color: #1990ff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin: 1px;
 }
 
-.empty {
-  background-color: white;
+.white {
+  height: 60px;
+  width: 60px;
+  background-color: #FFF;
+  border-radius: 100px;
 }
 
-.playerOne {
+.red {
+  height: 60px;
+  width: 60px;
   background-color: red;
+  border-radius: 100px;
 }
 
-.playerTwo {
-  background-color: green;
-}
-
-.playerWinner {
+.yellow {
+  height: 60px;
+  width: 60px;
   background-color: yellow;
+  border-radius: 100px;
+}
+
+.green {
+  height: 60px;
+  width: 60px;
+  background-color: green;
+  border-radius: 100px;
 }

@@ -1,6 +1,3 @@
-/* eslint-disable import/prefer-default-export */
-/* eslint-disable no-param-reassign */
-
 const ROWS = 6
 const COLUMNS = 7
 const EMPTY = 0
@@ -21,7 +18,7 @@ export default class Board {
     this.currentPlayer = currentPlayer
     this.grid = newArray(ROWS).map(() => newArray(COLUMNS, 0))
     this.gameOver = false
-    this.winner = undefined
+    this.hasWinner = false
     this.emptyCells = ROWS * COLUMNS
     this.moves = []
   }
@@ -52,7 +49,7 @@ export default class Board {
     this.emptyCells -= 1
     const winnerMoves = this.winnerMove(row, col)
     if (winnerMoves) {
-      this.winner = this.currentPlayer
+      this.hasWinner = true
       this.gameOver = true
       this.fillGrid(winnerMoves)
       return true

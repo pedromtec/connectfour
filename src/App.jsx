@@ -5,7 +5,7 @@ import Game from './components/Game'
 const App = () => {
   return (
     <div className="App">
-      <Game initialPlayer={1} />
+      <Game you={1} />
     </div>
   )
 }

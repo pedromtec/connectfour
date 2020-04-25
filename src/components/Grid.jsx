@@ -1,5 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/forbid-prop-types */
 import React from 'react'
 import PropTypes from 'prop-types'
 import Disk from './Disk'
@@ -11,7 +9,7 @@ const Grid = ({ grid, dropPiece }) => (
       <div className="row" key={indexRow}>
         {row.map((disk, indexDisk) => (
           <Disk
-            disk={disk}
+            value={disk}
             handleClick={() => dropPiece(indexDisk)}
             key={indexDisk}
           />

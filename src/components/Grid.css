@@ -1,4 +1,5 @@
 .grid {
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
 }
@@ -6,5 +7,4 @@
 .row {
   display: flex;
   flex-direction: row;
-  margin: 0px 0px;
 }
