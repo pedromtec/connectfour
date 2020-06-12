@@ -63,7 +63,7 @@ const Game = () => {
       piece: 1
     })
   }
-  console.log(state)
+  
   return (
     <div className="game">
       <Grid grid={state.board} dropPiece={dropPiece}/>

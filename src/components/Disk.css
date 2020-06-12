@@ -2,6 +2,7 @@
   height: 70px;
   width: 70px;
   background-color: #1990ff;
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -36,4 +37,21 @@
   width: 60px;
   background-color: green;
   border-radius: 100px;
+}
+
+.diskAnimation {
+  animation-name: fall;
+  animation-duration: 1s;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-420px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: scale(1.1);
+  }
 }

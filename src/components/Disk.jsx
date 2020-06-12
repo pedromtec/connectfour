@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import './Disk.css'
+import withAnimation from './withAnimation'
 
 const Disk = ({ value, handleClick }) => {
 
@@ -14,9 +15,7 @@ const Disk = ({ value, handleClick }) => {
   }
 
   return (
-    <div className="cell" onClick={handleClick}>
-      <div className={color}></div>
-    </div>
+    <div className={color}></div>
   )
 }
 
@@ -25,4 +24,4 @@ Disk.propTypes = {
   handleClick: PropTypes.func.isRequired,
 }
 
-export default Disk
+export default withAnimation(Disk)

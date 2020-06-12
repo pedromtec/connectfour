@@ -8,11 +8,13 @@ const Grid = ({ grid, dropPiece }) => (
     {grid.map((row, indexRow) => (
       <div className="row" key={indexRow}>
         {row.map((disk, indexDisk) => (
-          <Disk
-            value={disk}
-            handleClick={() => dropPiece(indexDisk)}
-            key={indexDisk}
-          />
+          <div className="cell" onClick={() => dropPiece(indexDisk)}>
+            <Disk
+              value={disk}
+              handleClick={() => dropPiece(indexDisk)}
+              key={indexDisk}
+            />
+          </div>
         ))}
       </div>
     ))}
