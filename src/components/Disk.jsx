@@ -1,27 +1,34 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import './Disk.css'
-import withAnimation from './withAnimation'
 
-const Disk = ({ value, handleClick }) => {
+const Disk = ({ value, row, handleClick }) => {
 
-  let color = 'white'
-  if(value === 1) {
+  let color = 'empty'
+  if (value === 1) {
     color = 'red'
-  } else if(value === 2){
+  } else if (value === 2) {
     color = 'yellow'
-  } else if(value === 3) {
+  } else if (value === 3) {
     color = 'green'
   }
+  
+  const anymationStyle = `da${row}`
 
   return (
-    <div className={color}></div>
+    <div className="cell" onClick={handleClick}>
+      {value !== 0 ?
+        <div className={anymationStyle}>
+          <div className={color}></div>
+        </div> :
+        <div className={color}></div>
+      }
+    </div>
   )
 }
 
 Disk.propTypes = {
   value: PropTypes.number.isRequired,
-  handleClick: PropTypes.func.isRequired,
 }
 
-export default withAnimation(Disk)
+export default Disk

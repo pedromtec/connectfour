@@ -11,10 +11,9 @@
   margin: 1px;
 }
 
-.white {
+.empty {
   height: 60px;
   width: 60px;
-  background-color: #1990ff;
   border-radius: 100px;
 }
 
@@ -39,19 +38,86 @@
   border-radius: 100px;
 }
 
-.diskAnimation {
-  animation-name: fall;
+.da5 {
+  animation-name: drop5;
   animation-duration: 1s;
 }
 
-@keyframes fall {
+@keyframes drop5 {
   0% {
     transform: translateY(-420px);
   }
   100% {
     transform: translateY(0px);
   }
+}
+
+.da4 {
+  animation-name: drop4;
+  animation-duration: 1s;
+}
+
+@keyframes drop4 {
+  0% {
+    transform: translateY(-350px);
+  }
   100% {
-    transform: scale(1.1);
+    transform: translateY(0px);
+  }
+}
+
+.da3 {
+  animation-name: drop3;
+  animation-duration: 0.83s;
+}
+
+@keyframes drop3 {
+  0% {
+    transform: translateY(-280px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.da2 {
+  animation-name: drop2;
+  animation-duration: 0.66s;
+}
+
+@keyframes drop2 {
+  0% {
+    transform: translateY(-210px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.da1 {
+  animation-name: drop1;
+  animation-duration: 0.5s;
+}
+
+@keyframes drop1 {
+  0% {
+    transform: translateY(-140px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.da0 {
+  animation-name: drop0;
+  animation-duration: 0.5s;
+}
+
+@keyframes drop0 {
+  0% {
+    transform: translateY(-70px);
+  }
+  100% {
+    transform: translateY(0px);
   }
 }

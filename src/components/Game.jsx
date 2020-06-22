@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react'
 import './Game.css'
 import Grid from './Grid'
+import { useState } from 'react'
 
 const DROP_PIECE = 'DROP_PIECE'
 
@@ -28,7 +29,7 @@ const dropPiece = (state, j, piece) => {
 
   const { board } = state
   const i = rowOf(j, board)
-  console.log(j)
+
   const getCol = (col, indexCol) => 
     indexCol === j ? piece : col
 
@@ -55,13 +56,16 @@ const Game = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState)
 
+  const [ piece, setPiece ] = useState(1) 
+
   const dropPiece = (indexPiece) => {
-    console.log(indexPiece)
+    
     dispatch({
       type: DROP_PIECE,
       col: indexPiece,
-      piece: 1
+      piece
     })
+    setPiece(piece === 1 ? 2:1)
   }
 
   return (
