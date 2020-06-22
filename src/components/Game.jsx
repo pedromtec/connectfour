@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react'
 import './Game.css'
 import Grid from './Grid'
-import { useState } from 'react'
+import { useState, createContext } from 'react'
 
 const DROP_PIECE = 'DROP_PIECE'
 
@@ -30,48 +30,55 @@ const dropPiece = (state, j, piece) => {
   const { board } = state
   const i = rowOf(j, board)
 
-  const getCol = (col, indexCol) => 
-    indexCol === j ? piece : col
+  const updateRow = (value, index) =>
+    index === j ? piece : value
 
-  const getRow = (row, indexRow) => 
-    indexRow === i ? row.map(getCol) : row
+  const updateBoard = (value, index) =>
+    index === i ? value.map(updateRow) : value
 
   return {
-    board: board.map(getRow),
-    lastDrop: {row: i, col: j}
+    board: board.map(updateBoard),
+    lastDrop: { row: i, col: j }
   }
 }
 
 const reducer = (state = initialState, action) => {
-  switch(action.type) {
-    case DROP_PIECE: 
+  switch (action.type) {
+    case DROP_PIECE:
       return dropPiece(state, action.col, action.piece)
-    default: 
+    default:
       return state
   }
 }
+
+export const GameContext = createContext({});
 
 
 const Game = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const [ piece, setPiece ] = useState(1) 
+  const [piece, setPiece] = useState(1)
 
   const dropPiece = (indexPiece) => {
-    
+
     dispatch({
       type: DROP_PIECE,
       col: indexPiece,
       piece
     })
-    setPiece(piece === 1 ? 2:1)
+    setPiece(piece === 1 ? 2 : 1)
   }
-
+  const value = {
+    state,
+    dropPiece
+  }
   return (
-    <div className="game">
-      <Grid grid={state.board} dropPiece={dropPiece}/>
-    </div>
+    <GameContext.Provider value={value}>
+      <div className="game">
+        <Grid grid={state.board} dropPiece={dropPiece} />
+      </div>
+    </GameContext.Provider>
   )
 }
 

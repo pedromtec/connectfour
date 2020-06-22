@@ -11,33 +11,15 @@
   margin: 1px;
 }
 
-.empty {
+.disk {
   height: 60px;
   width: 60px;
   border-radius: 100px;
 }
 
-.red {
-  height: 60px;
-  width: 60px;
-  background-color: red;
-  border-radius: 100px;
-}
-
-.yellow {
-  height: 60px;
-  width: 60px;
-  background-color: yellow;
-  border-radius: 100px;
-}
-
-.green {
-  height: 60px;
-  width: 60px;
-  background-color: green;
-  border-radius: 100px;
-}
-
+/*
+Animations
+*/
 .da5 {
   animation-name: drop5;
   animation-duration: 1s;
@@ -110,7 +92,7 @@
 
 .da0 {
   animation-name: drop0;
-  animation-duration: 0.5s;
+  animation-duration: 0.4s;
 }
 
 @keyframes drop0 {

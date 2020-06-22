@@ -1,34 +1,37 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { useContext } from 'react'
+import { GameContext } from '../components/Game'
 import './Disk.css'
 
-const Disk = ({ value, row, handleClick }) => {
+const colors = {
+  1: 'red',
+  2: 'yellow',
+}
 
-  let color = 'empty'
-  if (value === 1) {
-    color = 'red'
-  } else if (value === 2) {
-    color = 'yellow'
-  } else if (value === 3) {
-    color = 'green'
-  }
-  
+const Disk = ({ row, column }) => {
+
+  const { dropPiece, state: {
+    board
+  } } = useContext(GameContext)
+
+  const value = board[row][column]
+
   const anymationStyle = `da${row}`
 
   return (
-    <div className="cell" onClick={handleClick}>
+    <div className="cell" onClick={() => dropPiece(column)}>
       {value !== 0 ?
         <div className={anymationStyle}>
-          <div className={color}></div>
+          <div className='disk' style={{
+            backgroundColor: colors[value]
+          }}></div>
         </div> :
-        <div className={color}></div>
+        <div className='disk' style={{
+          backgroundColor: colors[value]
+        }}></div>
       }
     </div>
   )
 }
 
-Disk.propTypes = {
-  value: PropTypes.number.isRequired,
-}
 
 export default Disk
