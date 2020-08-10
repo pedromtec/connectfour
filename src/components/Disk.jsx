@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { createUseStyles } from 'react-jss'
+import { useFriction } from 'renature';
 import { GameContext } from '../components/Game'
 import './Disk.css'
 
@@ -8,71 +8,60 @@ const colors = {
   2: 'yellow',
 }
 
-// const styles = {
-//   '@keyframes drop': props => ({
-//     from: {
-//       transform: `translateY(${props.height}px);`
-//     },
-//     to: {
-//       transform: 'translateY(0px);'
-//     }
-//   }),
-//   animationContainer: props => ({
-//     animationName: '$drop',
-//     animationDuration: `${props.time}`
-//   })
-// }
-
-const styles = {
-  '@keyframes drop': {
-    from: {
-      transform: `translateY(-429px);`
-    },
-    to: {
-      transform: 'translateY(0px);'
-    }
-  },
-  animationContainer: props => ({
-    animationName: '$drop',
-    animationDuration: `${props.time}`
-  })
+const animationProps = {
+  5: { height: -70, mu: 1},
+  4: { height: -140, mu: 1},
+  3: { height: -210, mu: 1.2},
+  2: { height: -280, mu: 1.4},
+  1: { height: -350, mu: 1.4},
+  0: { height: -420, mu: 2.4},
 }
 
-const useStyles = createUseStyles(styles)
+const HEIGHT = 429
 
-const animationProps = {
-  0: { height: -70, time: '0.4s'},
-  1: { height: -140, time: '0.5s'},
-  2: { height: -210, time: '0.66s'},
-  3: { height: -280, time: '0.83s'},
-  4: { height: -350, time: '1s'},
-  5: { height: -420, time: '1s'},
+const AnimatedDisk = ({row, value, verticalTranslate}) => {
+
+  const { mu } = animationProps[row]
+
+  const [props] = useFriction({
+    from: {
+      transform: `translateY(${-verticalTranslate}px)`,
+    },
+    to: {
+      transform: 'translateY(0px)',
+    },
+    config: {
+      mu,
+      mass: 0.8,
+      initialVelocity: 8,
+    }
+  })
+
+  return (
+    <div className='disk' style={{
+      backgroundColor: colors[value]
+    }} {...props} />
+  )
 }
 
 const Disk = ({ row, column }) => {
 
   const { dropPiece, state: {
-    board
+    board, lastDrop
   } } = useContext(GameContext)
 
-
-  const classes = useStyles(animationProps[row])
-  
+  const top = HEIGHT - (5 - row) * 70
+  const withAnimation = lastDrop && lastDrop.row === row && lastDrop.col === column
   const value = board[row][column]
-
-  //const anymationStyle = `da${row}`
 
   return (
     <div className="cell" onClick={() => dropPiece(column)}>
-      {value !== 0 ?
-        <div className={classes.animationContainer}>
+      {
+        withAnimation ?
+          <AnimatedDisk row={row} value={value} verticalTranslate={top} /> :
           <div className='disk' style={{
             backgroundColor: colors[value]
           }}></div>
-        </div> :
-        <div className='disk' style={{
-          backgroundColor: colors[value]
-        }}></div>
       }
     </div>
   )
