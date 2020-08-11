@@ -2,6 +2,9 @@ import React from 'react'
 import './DropBar.css'
 import { useContext } from 'react'
 import { GameContext } from './Game'
+import WindowContext from './WindowContext'
+
+const { useWindowContext } = WindowContext 
 
 const colors = {
   1: 'red',
@@ -11,18 +14,21 @@ const colors = {
 const DropBar = ( {currentPlayer} ) => {
 
   const [positionX, setPositionX] = React.useState(0)
-
+  const windowContext = useWindowContext()
+  console.log({windowContext})
+  
   const { dropPiece } = useContext(GameContext)
 
   const handleMouseMove = (e) => {
+    e.persist()
     setPositionX(e.clientX)
   }
 
 
   const backgroundColor = colors[currentPlayer]
   
-  const handleClick = (e) => {
-    const boardWidth = e.clientX - 479 + 30
+  const handleClick = () => {
+    const boardWidth = positionX - 479 + 30
     const column = Math.floor(boardWidth / 70)
     dropPiece(column)
   }
