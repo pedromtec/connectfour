@@ -28,8 +28,10 @@ const DropBar = ( {currentPlayer} ) => {
   const backgroundColor = colors[currentPlayer]
   
   const handleClick = () => {
-    const boardWidth = positionX - 479 + 30
-    const column = Math.floor(boardWidth / 70)
+    console.log(windowContext.windowWidth, positionX)
+    const clickPosition = positionX - (windowContext.windowWidth - 498) / 2
+    console.log(clickPosition)
+    const column = Math.floor(clickPosition / 70)
     dropPiece(column)
   }
 

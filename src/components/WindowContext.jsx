@@ -4,11 +4,11 @@ import { useState } from 'react';
 export const WindowContext = createContext({});
 
 const WindowContextProvider = ({children}) => {
-  const [windowWidth, setWindowWidth] = useState(null)
-  const [windowHeight, setWindowHeight] = useState(null)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight)
   
   useEffect(() => {
-    const listener = window.addEventListener('resize', () => {
+    const listener = window.addEventListener('resize', (e) => {
       setWindowWidth(window.innerWidth)
       setWindowHeight(window.innerHeight)
     })
