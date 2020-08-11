@@ -1,10 +1,9 @@
 .cell {
-  height: 70px;
-  width: 70px;
+  height: 3.4375rem;
+  width: 3rem;
   background-color: #1990ff;
   position: relative;
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
   cursor: pointer;
@@ -12,24 +11,18 @@
 }
 
 .disk {
-  height: 60px;
-  width: 60px;
+  height: 2.1875rem;
+  width: 2.1875rem;
   border-radius: 100px;
 }
 
-/*
-Animations
-*/
-.da5 {
-  animation-name: drop5;
-  animation-duration: 1s;
-}
-
-@keyframes drop5 {
-  0% {
-    transform: translateY(-420px);
+@media(min-width: 600px) {
+  .cell {
+    height: 70px;
+    width: 70px;
   }
-  100% {
-    transform: translateY(0px);
+  .disk {
+    height: 60px;
+    width: 60px;
   }
 }

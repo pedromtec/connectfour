@@ -77,7 +77,7 @@ const Game = () => {
   return (
     <GameContext.Provider value={value}>
       <div className="game">
-        <DropBar currentPlayer={piece}/>
+        {/* <DropBar currentPlayer={piece}/> */}
         <Grid grid={state.board} dropPiece={dropPiece} />
       </div>
     </GameContext.Provider>
