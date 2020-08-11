@@ -11,6 +11,8 @@ const colors = {
   2: 'yellow',
 }
 
+const BOARD_WIDTH = 498
+
 const DropBar = ( {currentPlayer} ) => {
 
   const [positionX, setPositionX] = React.useState(0)
@@ -21,7 +23,8 @@ const DropBar = ( {currentPlayer} ) => {
 
   const handleMouseMove = (e) => {
     e.persist()
-    setPositionX(e.clientX)
+    const final = Math.floor((windowContext.windowWidth - BOARD_WIDTH) / 2 + BOARD_WIDTH)
+    setPositionX(Math.min(e.clientX, final))
   }
 
 
@@ -29,7 +32,7 @@ const DropBar = ( {currentPlayer} ) => {
   
   const handleClick = () => {
     console.log(windowContext.windowWidth, positionX)
-    const clickPosition = positionX - (windowContext.windowWidth - 498) / 2
+    const clickPosition = positionX - (windowContext.windowWidth - BOARD_WIDTH) / 2
     console.log(clickPosition)
     const column = Math.floor(clickPosition / 70)
     dropPiece(column)
