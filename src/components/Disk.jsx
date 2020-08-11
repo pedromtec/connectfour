@@ -46,7 +46,7 @@ const AnimatedDisk = ({row, value, verticalTranslate}) => {
 
 const Disk = ({ row, column }) => {
 
-  const { state: {
+  const { dropPiece, state: {
     board, lastDrop
   } } = useContext(GameContext)
 
@@ -55,7 +55,7 @@ const Disk = ({ row, column }) => {
   const value = board[row][column]
 
   return (
-    <div className="cell" onClick={() => {}}>
+    <div className="cell" onClick={() => dropPiece(column)}>
       {
         withAnimation ?
           <AnimatedDisk row={row} value={value} verticalTranslate={top} /> :
