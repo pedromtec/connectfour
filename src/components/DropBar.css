@@ -1,0 +1,18 @@
+.dropBar {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    width: 495px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-top: solid 3px  #1990ff;
+    border-right: solid 3px  #1990ff;
+    border-left: solid 3px  #1990ff;
+    cursor: none;
+}
+
+.dropDisk {
+  width: 60px;
+  height: 60px;
+  border-radius: 100px;
+}
