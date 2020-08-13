@@ -14,13 +14,23 @@ function isOut(row, col) {
 }
 
 export default class Board {
-  constructor(currentPlayer = ONE) {
+  constructor(currentPlayer = ONE, hasWinner = false, grid) {
+    this.lastDrop = null
     this.currentPlayer = currentPlayer
-    this.grid = newArray(ROWS).map(() => newArray(COLUMNS, 0))
+    this.grid = grid ? grid : newArray(ROWS).map(() => newArray(COLUMNS, 0))
     this.gameOver = false
-    this.hasWinner = false
+    this.hasWinner = hasWinner
     this.emptyCells = ROWS * COLUMNS
-    this.moves = []
+    this.winner = null
+  }
+
+  getBoardState() {
+    return {
+      hasWinner: this.hasWinner,
+      lastDrop: this.lastDrop,
+      currentPlayer: this.currentPlayer,
+      board: this.grid.map(row => [...row])
+    }
   }
 
   changeTurn() {
@@ -36,21 +46,22 @@ export default class Board {
   }
 
   dropPiece(col) {
-    if (this.gameOver) {
+    if (this.gameOver || this.hasWinner) {
       return false
     }
+
     const row = this.getRow(col)
     if (row < 0) {
       return false
     }
-
+    this.lastDrop = {row, col}
     this.grid[row][col] = this.currentPlayer
-    this.moves.push([row, col])
     this.emptyCells -= 1
     const winnerMoves = this.winnerMove(row, col)
     if (winnerMoves) {
       this.hasWinner = true
       this.gameOver = true
+      this.winner = this.currentPlayer
       this.fillGrid(winnerMoves)
       return true
     }
@@ -63,13 +74,13 @@ export default class Board {
 
   winnerMove(row, col) {
     const primaryDif = Math.min(row, col)
-    const secundaryDif = Math.min(row, COLUMNS - col - 1)
+    const secondaryDif = Math.min(row, COLUMNS - col - 1)
 
     const directions = [
       [row, 0, 0, 1],
       [0, col, 1, 0],
       [row - primaryDif, col - primaryDif, 1, 1],
-      [row - secundaryDif, col + secundaryDif, 1, -1],
+      [row - secondaryDif, col + secondaryDif, 1, -1],
     ]
     const winnerCells = []
     directions.forEach(direction => {
@@ -103,14 +114,4 @@ export default class Board {
     })
   }
 
-  rollback() {
-    if (!this.moves.length) {
-      console.warn("You cant't rollback")
-    }
-    const [row, col] = this.moves.pop()
-    this.grid[row][col] = EMPTY
-    this.winner = undefined
-    this.gameOver = false
-    this.changeTurn()
-  }
 }

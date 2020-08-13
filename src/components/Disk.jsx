@@ -8,6 +8,7 @@ import './Disk.css'
 const { useWindowContext } = WindowContext
 
 const colors = {
+  0: '',
   1: 'red',
   2: 'yellow',
 }
@@ -21,7 +22,33 @@ const animationProps = {
   0: { height: -420, mu: 2.4},
 }
 
-const AnimatedDisk = ({row, value, verticalTranslate}) => {
+const WinnerDisk = ({color}) => {
+  const [props] = useFriction({
+    from: {
+      transform: 'scale(0.5) rotate(0deg)',
+      borderRadius: '100%',
+    },
+    to: {
+      transform: 'scale(1.2) rotate(360deg)',
+      background: 'steelblue',
+      borderRadius: '50%',
+    },
+    config: {
+      mu: 0.2,
+      mass: 20,
+      initialVelocity: 2,
+    },
+    infinite: true,
+  });
+
+  return (
+    <div className='disk' style={{
+      backgroundColor: color
+    }} {...props} />
+  )
+}
+
+const AnimatedDisk = ({row, color, verticalTranslate}) => {
 
   const { mu } = animationProps[row]
 
@@ -41,15 +68,25 @@ const AnimatedDisk = ({row, value, verticalTranslate}) => {
 
   return (
     <div className='disk' style={{
-      backgroundColor: colors[value]
+      backgroundColor: color
     }} {...props} />
   )
+}
+
+
+
+const getDiskColor = (hasWinner, currentPlayer, diskValue) => {
+  if(hasWinner && diskValue === 3) {
+    return colors[currentPlayer]
+  }else {
+    return colors[diskValue]
+  }
 }
 
 const Disk = ({ row, column }) => {
 
   const { dropPiece, state: {
-    board, lastDrop
+    board, lastDrop, currentPlayer, hasWinner
   } } = useContext(GameContext)
   
   const { boardHeight } = useWindowContext()
@@ -57,14 +94,23 @@ const Disk = ({ row, column }) => {
   const verticalTranslate = boardHeight - (5 - row) * (boardHeight / 6)
   
   const withAnimation = lastDrop && lastDrop.row === row && lastDrop.col === column
-  
+  const color = getDiskColor(hasWinner, currentPlayer, board[row][column])
+
+  if(board[row][column] === 3) {
+    return (
+      <div className="cell" onClick={() => dropPiece(column)}>
+        <WinnerDisk color={color}/>
+      </div>
+    )
+  }
+
   return (
     <div className="cell" onClick={() => dropPiece(column)}>
       {
         withAnimation ?
-          <AnimatedDisk row={row} value={board[row][column]} verticalTranslate={verticalTranslate} /> :
+          <AnimatedDisk row={row} color={color} verticalTranslate={verticalTranslate} /> :
           <div className='disk' style={{
-            backgroundColor: colors[board[row][column]]
+            backgroundColor: color
           }} />
       }
     </div>

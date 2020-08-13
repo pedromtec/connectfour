@@ -1,12 +1,15 @@
 import React, { useReducer } from 'react'
 import './Game.css'
 import Grid from './Grid'
-import { useState, createContext } from 'react'
+import { createContext } from 'react'
+import Board from '../utils/board'
 
 const DROP_PIECE = 'DROP_PIECE'
 
 const initialState = {
-  lastDrop: undefined,
+  hasWinner: false,
+  currentPlayer: 1,
+  lastDrop: null,
   board: [
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
@@ -17,35 +20,17 @@ const initialState = {
   ]
 }
 
-const rowOf = (col, board) => {
-  let row = 0
-  while (row < 6 && board[row][col] === 0) {
-    row += 1
-  }
-  return row - 1
-}
-
-const dropPiece = (state, j, piece) => {
-
-  const { board } = state
-  const i = rowOf(j, board)
-
-  const updateRow = (value, index) =>
-    index === j ? piece : value
-
-  const updateBoard = (value, index) =>
-    index === i ? value.map(updateRow) : value
-
-  return {
-    board: board.map(updateBoard),
-    lastDrop: { row: i, col: j }
-  }
+const dropPiece = (state, column) => {
+  const board = new Board(state.currentPlayer, state.hasWinner, state.board)
+  board.dropPiece(column)
+  console.log(board.getBoardState())
+  return board.getBoardState()
 }
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case DROP_PIECE:
-      return dropPiece(state, action.col, action.piece)
+      return dropPiece(state, action.col)
     default:
       return state
   }
@@ -53,30 +38,25 @@ const reducer = (state = initialState, action) => {
 
 export const GameContext = createContext({});
 
-
 const Game = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const [piece, setPiece] = useState(1)
 
   const dropPiece = (indexPiece) => {
-
     dispatch({
       type: DROP_PIECE,
-      col: indexPiece,
-      piece
+      col: indexPiece
     })
-    setPiece(piece === 1 ? 2 : 1)
   }
   const value = {
     state,
     dropPiece
   }
+
   return (
     <GameContext.Provider value={value}>
       <div className="game">
-        {/* <DropBar currentPlayer={piece}/> */}
         <Grid grid={state.board} dropPiece={dropPiece} />
       </div>
     </GameContext.Provider>
