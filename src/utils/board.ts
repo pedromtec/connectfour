@@ -5,16 +5,25 @@ const ONE = 1
 const TWO = 2
 const WINNER = 3
 
-function newArray(len, value) {
+function newArray(len: number, value?: number) {
   return Array(len).fill(value)
 }
 
-function isOut(row, col) {
+function isOut(row: number, col: number) {
   return row < 0 || row >= ROWS || col < 0 || col >= COLUMNS
 }
 
 export default class Board {
-  constructor(currentPlayer = ONE, hasWinner = false, grid) {
+
+  lastDrop: { row: number, column: number} | null
+  currentPlayer: number
+  grid: number[][]
+  gameOver: boolean
+  hasWinner: boolean
+  emptyCells: number
+  winner: number | null
+
+  constructor(currentPlayer = ONE, hasWinner = false, grid: number[][]) {
     this.lastDrop = null
     this.currentPlayer = currentPlayer
     this.grid = grid ? grid : newArray(ROWS).map(() => newArray(COLUMNS, 0))
@@ -37,27 +46,27 @@ export default class Board {
     this.currentPlayer = this.currentPlayer === ONE ? TWO : ONE
   }
 
-  getRow(col) {
+  getRow(column: number) {
     let row = 0
-    while (row < ROWS && this.grid[row][col] === EMPTY) {
+    while (row < ROWS && this.grid[row][column] === EMPTY) {
       row += 1
     }
     return row - 1
   }
 
-  dropPiece(col) {
+  dropPiece(column: number) {
     if (this.gameOver || this.hasWinner) {
       return false
     }
 
-    const row = this.getRow(col)
+    const row = this.getRow(column)
     if (row < 0) {
       return false
     }
-    this.lastDrop = {row, col}
-    this.grid[row][col] = this.currentPlayer
+    this.lastDrop = {row, column}
+    this.grid[row][column] = this.currentPlayer
     this.emptyCells -= 1
-    const winnerMoves = this.winnerMove(row, col)
+    const winnerMoves = this.winnerMove(row, column)
     if (winnerMoves) {
       this.hasWinner = true
       this.gameOver = true
@@ -72,17 +81,18 @@ export default class Board {
     return true
   }
 
-  winnerMove(row, col) {
-    const primaryDif = Math.min(row, col)
-    const secondaryDif = Math.min(row, COLUMNS - col - 1)
+  winnerMove(row: number, column: number) {
+    const primaryDif = Math.min(row, column)
+    const secondaryDif = Math.min(row, COLUMNS - column - 1)
 
-    const directions = [
+    const directions: [number, number, number, number][] = [
       [row, 0, 0, 1],
-      [0, col, 1, 0],
-      [row - primaryDif, col - primaryDif, 1, 1],
-      [row - secondaryDif, col + secondaryDif, 1, -1],
+      [0, column, 1, 0],
+      [row - primaryDif, column - primaryDif, 1, 1],
+      [row - secondaryDif, column + secondaryDif, 1, -1],
     ]
-    const winnerCells = []
+    const winnerCells: number[][] = []
+
     directions.forEach(direction => {
       const result = this.checkLine(...direction)
       if (result) winnerCells.push(...result)
@@ -90,9 +100,9 @@ export default class Board {
     return winnerCells.length > 0 ? winnerCells : null
   }
 
-  checkLine(row, col, deltaRow, deltaCol) {
+  checkLine(row: number, col: number, deltaRow: number, deltaCol: number) {
     let line = []
-    let maxLine = []
+    let maxLine: number[][] = []
     while (!isOut(row, col)) {
       if (this.grid[row][col] === this.currentPlayer) {
         line.push([row, col])
@@ -108,7 +118,7 @@ export default class Board {
     return maxLine.length >= 4 ? maxLine : null
   }
 
-  fillGrid(cells) {
+  fillGrid(cells: number[][]) {
     cells.forEach(([row, col]) => {
       this.grid[row][col] = WINNER
     })

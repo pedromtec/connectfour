@@ -1,14 +1,23 @@
-import React, {createContext, useEffect, useContext} from 'react'
+import React, {createContext, useEffect, useContext, ReactNode, FunctionComponent} from 'react'
 import { useState } from 'react';
 import { useMemo } from 'react';
 import { useCallback } from 'react';
 
-export const WindowContext = createContext({});
+interface Context {
+  boardHeight: number
+}
+
+export const WindowContext = createContext<Context | undefined>(undefined);
 
 const MOBILE_HEIGHT = 300
 const DESKTOP_HEIGHT = 420
 
-const WindowContextProvider = ({children}) => {
+interface WindowContextProps {
+  children: ReactNode
+}
+
+
+const WindowContextProvider: FunctionComponent<WindowContextProps> = ({children}) => {
 
   const [boardHeight, setBoardHeight] = useState(DESKTOP_HEIGHT)  
 
@@ -26,10 +35,8 @@ const WindowContextProvider = ({children}) => {
   }, [updateBoardHeight])
 
   useEffect(function resizeListener() {
-    const listener = window.addEventListener('resize', (e) => {
-      updateBoardHeight()
-    })
-    return () => window.removeEventListener('resize', listener)
+    window.addEventListener('resize', updateBoardHeight)
+    return () => window.removeEventListener('resize', updateBoardHeight)
   }, [updateBoardHeight])
 
 

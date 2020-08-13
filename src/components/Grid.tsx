@@ -1,9 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { FunctionComponent } from 'react'
 import Disk from './Disk'
 import './Grid.css'
 
-const Grid = ({ grid }) => (
+interface Props {
+  grid: number[][]
+}
+
+const Grid: FunctionComponent<Props> = ({ grid }) => (
   <div className="grid">
     {grid.map((row, indexRow) => (
       <div className="row" key={indexRow}>
@@ -18,9 +21,5 @@ const Grid = ({ grid }) => (
     ))}
   </div>
 )
-
-Grid.propTypes = {
-  grid: PropTypes.array.isRequired,
-}
 
 export default Grid

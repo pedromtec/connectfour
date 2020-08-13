@@ -7,7 +7,7 @@ const App = () => {
   return (
     <WindowContext.WindowContextProvider>
       <div className="App">
-        <Game you={1} />
+        <Game />
       </div>
     </WindowContext.WindowContextProvider>
   )
