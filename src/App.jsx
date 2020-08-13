@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 import Game from './components/Game'
-import WindowContext from './components/WindowContext'
+import WindowContext from './WindowContext'
 
 const App = () => {
   return (

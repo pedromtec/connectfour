@@ -1,28 +1,24 @@
 .cell {
-  height: 3.4375rem;
-  width: 3rem;
   background-color: #1990ff;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-grow: 1;
   cursor: pointer;
   margin: 1px;
 }
 
 .disk {
-  height: 2.1875rem;
-  width: 2.1875rem;
+  height: 85%;
+  width: 85%;
   border-radius: 100px;
 }
 
 @media(min-width: 600px) {
-  .cell {
-    height: 70px;
-    width: 70px;
-  }
   .disk {
-    height: 60px;
-    width: 60px;
+    height: 85%;
+    width: 85%;
+    border-radius: 100px;
   }
 }

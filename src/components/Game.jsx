@@ -2,7 +2,6 @@ import React, { useReducer } from 'react'
 import './Game.css'
 import Grid from './Grid'
 import { useState, createContext } from 'react'
-import DropBar from './DropBar'
 
 const DROP_PIECE = 'DROP_PIECE'
 

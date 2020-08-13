@@ -1,7 +1,11 @@
 import React, { useContext } from 'react'
 import { useFriction } from 'renature';
 import { GameContext } from '../components/Game'
+import WindowContext from '../WindowContext'
 import './Disk.css'
+
+
+const { useWindowContext } = WindowContext
 
 const colors = {
   1: 'red',
@@ -16,8 +20,6 @@ const animationProps = {
   1: { height: -350, mu: 1.4},
   0: { height: -420, mu: 2.4},
 }
-
-const HEIGHT = 429
 
 const AnimatedDisk = ({row, value, verticalTranslate}) => {
 
@@ -49,19 +51,21 @@ const Disk = ({ row, column }) => {
   const { dropPiece, state: {
     board, lastDrop
   } } = useContext(GameContext)
-
-  const top = HEIGHT - (5 - row) * 70
+  
+  const { boardHeight } = useWindowContext()
+  // console.log({boardHeight})
+  const verticalTranslate = boardHeight - (5 - row) * (boardHeight / 6)
+  
   const withAnimation = lastDrop && lastDrop.row === row && lastDrop.col === column
-  const value = board[row][column]
-
+  
   return (
     <div className="cell" onClick={() => dropPiece(column)}>
       {
         withAnimation ?
-          <AnimatedDisk row={row} value={value} verticalTranslate={top} /> :
+          <AnimatedDisk row={row} value={board[row][column]} verticalTranslate={verticalTranslate} /> :
           <div className='disk' style={{
-            backgroundColor: colors[value]
-          }}></div>
+            backgroundColor: colors[board[row][column]]
+          }} />
       }
     </div>
   )
