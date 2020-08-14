@@ -2,3 +2,10 @@
   display: flex;
   flex-direction: column;
 }
+
+.mainContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+}

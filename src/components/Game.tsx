@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react'
 import './Game.css'
-import Grid from './Grid'
+import Grid from './Grid/Grid'
 import { createContext } from 'react'
 import Board from '../utils/board'
 
@@ -67,8 +67,10 @@ const Game = () => {
 
   return (
     <GameContext.Provider value={value}>
-      <div className="game">
-        <Grid grid={gameState.board} />
+      <div className="mainContainer">
+        <div className="game">
+          <Grid grid={gameState.board} />
+        </div>
       </div>
     </GameContext.Provider>
   )

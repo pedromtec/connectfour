@@ -1,7 +1,7 @@
 import React, { useContext, FunctionComponent } from 'react'
 import { useFriction } from 'renature';
-import { GameContext } from './Game'
-import WindowContext from '../WindowContext'
+import { GameContext } from '../Game'
+import WindowContext from '../../WindowContext'
 import './Disk.css'
 
 

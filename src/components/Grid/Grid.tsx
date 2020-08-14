@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import Disk from './Disk'
+import Disk from '../Disk/Disk'
 import './Grid.css'
 
 interface Props {
