@@ -26,7 +26,7 @@ export default class Board {
   constructor(currentPlayer = ONE, hasWinner = false, grid: number[][]) {
     this.lastDrop = null
     this.currentPlayer = currentPlayer
-    this.grid = grid ? grid : newArray(ROWS).map(() => newArray(COLUMNS, 0))
+    this.grid = grid ? grid.map(row => [...row]) : newArray(ROWS).map(() => newArray(COLUMNS, 0))
     this.gameOver = false
     this.hasWinner = hasWinner
     this.emptyCells = ROWS * COLUMNS

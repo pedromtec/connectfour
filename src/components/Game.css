@@ -1,6 +1,7 @@
 .game {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .mainContainer {
@@ -8,4 +9,11 @@
   align-items: center;
   justify-content: center;
   height: 90%;
+}
+
+.startContainer {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
 }
