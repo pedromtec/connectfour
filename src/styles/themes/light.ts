@@ -7,5 +7,5 @@ export default {
 
     background: '#FCFCFF',
     text: '#333'
-  },
-};
+  }
+}

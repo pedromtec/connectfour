@@ -14,8 +14,7 @@ function isOut(row: number, col: number) {
 }
 
 export default class Board {
-
-  lastDrop: { row: number, column: number} | null
+  lastDrop: { row: number; column: number } | null
   currentPlayer: number
   grid: number[][]
   gameOver: boolean
@@ -26,7 +25,9 @@ export default class Board {
   constructor(currentPlayer = ONE, hasWinner = false, grid: number[][]) {
     this.lastDrop = null
     this.currentPlayer = currentPlayer
-    this.grid = grid ? grid.map(row => [...row]) : newArray(ROWS).map(() => newArray(COLUMNS, 0))
+    this.grid = grid
+      ? grid.map((row) => [...row])
+      : newArray(ROWS).map(() => newArray(COLUMNS, 0))
     this.gameOver = false
     this.hasWinner = hasWinner
     this.emptyCells = ROWS * COLUMNS
@@ -38,7 +39,7 @@ export default class Board {
       hasWinner: this.hasWinner,
       lastDrop: this.lastDrop,
       currentPlayer: this.currentPlayer,
-      board: this.grid.map(row => [...row])
+      board: this.grid.map((row) => [...row])
     }
   }
 
@@ -63,7 +64,7 @@ export default class Board {
     if (row < 0) {
       return false
     }
-    this.lastDrop = {row, column}
+    this.lastDrop = { row, column }
     this.grid[row][column] = this.currentPlayer
     this.emptyCells -= 1
     const winnerMoves = this.winnerMove(row, column)
@@ -89,11 +90,11 @@ export default class Board {
       [row, 0, 0, 1],
       [0, column, 1, 0],
       [row - primaryDif, column - primaryDif, 1, 1],
-      [row - secondaryDif, column + secondaryDif, 1, -1],
+      [row - secondaryDif, column + secondaryDif, 1, -1]
     ]
     const winnerCells: number[][] = []
 
-    directions.forEach(direction => {
+    directions.forEach((direction) => {
       const result = this.checkLine(...direction)
       if (result) winnerCells.push(...result)
     })
@@ -123,5 +124,4 @@ export default class Board {
       this.grid[row][col] = WINNER
     })
   }
-
 }

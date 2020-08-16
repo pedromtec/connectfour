@@ -3,15 +3,15 @@ import './Game.css'
 import Grid from './Grid/Grid'
 import { createContext } from 'react'
 import Board from '../utils/board'
-import Button from "@material-ui/core/Button";
+import Button from '@material-ui/core/Button'
 
 const DROP_PIECE = 'DROP_PIECE'
 const START = 'START'
 
 interface GameState {
-  hasWinner: boolean,
-  currentPlayer: number,
-  lastDrop: { row: number; column: number } | null,
+  hasWinner: boolean
+  currentPlayer: number
+  lastDrop: { row: number; column: number } | null
   board: number[][]
 }
 
@@ -47,17 +47,15 @@ const reducer = (state = initialState, action: any) => {
 }
 
 interface Context {
-  gameState: GameState,
+  gameState: GameState
   dropPiece: (column: number) => void
 }
 
-export const GameContext = createContext<Context | undefined>(undefined);
+export const GameContext = createContext<Context | undefined>(undefined)
 
 const Game = () => {
-
   const [gameState, dispatch] = useReducer(reducer, initialState)
 
-  console.log({gameState})
   const dropPiece = (indexPiece: number) => {
     dispatch({
       type: DROP_PIECE,
@@ -75,11 +73,18 @@ const Game = () => {
         <div className="game">
           <Grid grid={gameState.board} />
           <div className="startContainer">
-            <Button fullWidth={true} variant="contained" color="primary" onClick={() => dispatch({
-              type: START,
-            })}>
+            <Button
+              fullWidth={true}
+              variant="contained"
+              color="primary"
+              onClick={() =>
+                dispatch({
+                  type: START
+                })
+              }
+            >
               Start
-          </Button>
+            </Button>
           </div>
         </div>
       </div>

@@ -1,14 +1,18 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react'
 import './Disk.css'
 
-const Disk: FunctionComponent<Props> = ({ color, animationProps, handleClick }) => {
+const Disk: React.FC<Props> = ({ color, animationProps, handleClick }) => {
   return (
     <div className="cell" onClick={handleClick}>
-      <div className='disk' style={{
-        backgroundColor: color
-      }} {...animationProps} />
+      <div
+        className="disk"
+        style={{
+          backgroundColor: color
+        }}
+        {...animationProps}
+      />
     </div>
-  );
+  )
 }
 
 interface Props {
@@ -16,6 +20,5 @@ interface Props {
   animationProps?: any
   handleClick: () => void
 }
-
 
 export default React.memo(Disk)

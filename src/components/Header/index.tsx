@@ -1,21 +1,19 @@
-import React, { useContext } from 'react';
-import { ThemeContext } from 'styled-components';
-import Switch from "@material-ui/core/Switch";
+import React, { useContext } from 'react'
+import { ThemeContext } from 'styled-components'
+import Switch from '@material-ui/core/Switch'
 
-import { Container } from './styles';
+import { Container } from './styles'
 
 interface Props {
-  toggleTheme(): void;
+  toggleTheme(): void
 }
 
 const Header: React.FC<Props> = ({ toggleTheme }) => {
-  const { title } = useContext(ThemeContext);
+  const { title } = useContext(ThemeContext)
 
   return (
     <Container>
-      <span>
-      ConnectFour
-      </span>
+      <span>ConnectFour</span>
 
       <Switch
         checked={title === 'dark'}
@@ -24,7 +22,7 @@ const Header: React.FC<Props> = ({ toggleTheme }) => {
         name="checkedB"
       />
     </Container>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
