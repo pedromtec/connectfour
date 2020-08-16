@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import Disk from '../Disk/Disk'
+import AnimatedDisk from '../Disk/AnimatedDisk'
 import './Grid.css'
 
 interface Props {
@@ -10,8 +10,8 @@ const Grid: FunctionComponent<Props> = ({ grid }) => (
   <div className="grid">
     {grid.map((row, indexRow) => (
       <div className="row" key={indexRow}>
-        {row.map((disk, indexDisk) => (
-          <Disk
+        {row.map((_, indexDisk) => (
+          <AnimatedDisk
             key={indexDisk}
             row={indexRow}
             column={indexDisk}
