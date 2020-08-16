@@ -6,7 +6,7 @@ import { ThemeProvider, DefaultTheme } from 'styled-components';
 import usePersistedState from './hooks/usePersistedState'
 
 import light from './styles/themes/light';
-import dark from './styles/themes/dark';   
+import dark from './styles/themes/dark';
 
 import GlobalStyle from './styles/global';
 import Header from './components/Header';
