@@ -9,8 +9,8 @@ const { useWindowContext } = WindowContext
 
 const colors: Record<number, string> = {
   0: '',
-  1: 'red',
-  2: 'yellow'
+  1: '#e9ff70',
+  2: '#ff70a6'
 }
 
 const animationProps: Record<number, { height: number; mu: number }> = {
