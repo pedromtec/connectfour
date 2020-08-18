@@ -1,5 +1,5 @@
 import React from 'react'
-import AnimatedDisk from '../Disk/AnimatedDisk'
+import Disk from '../Disk'
 import './Grid.css'
 
 interface Props {
@@ -11,7 +11,7 @@ const Grid: React.FC<Props> = ({ grid }) => (
     {grid.map((row, indexRow) => (
       <div className="row" key={indexRow}>
         {row.map((_, indexDisk) => (
-          <AnimatedDisk key={indexDisk} row={indexRow} column={indexDisk} />
+          <Disk key={indexDisk} row={indexRow} column={indexDisk} />
         ))}
       </div>
     ))}
