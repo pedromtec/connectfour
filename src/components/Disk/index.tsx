@@ -7,8 +7,8 @@ import AnimatedDisk from './AnimatedDisk'
 const { useWindowContext } = WindowContext
 
 const colors: Record<number, string> = {
-  1: '#e9ff70',
-  2: '#ff70a6'
+  1: '#8be9fd',
+  2: '#f1fa8c'
 }
 
 type AnimationType = 'DROP' | 'WINNER' | 'NONE'
