@@ -1,8 +1,8 @@
 import React, { useReducer } from 'react'
 import './Game.css'
-import Grid from './Grid/Grid'
+import Board from './Grid'
 import { createContext } from 'react'
-import Board from '../utils/board'
+import ConnectFourBoard from '../utils/board'
 import Button from '@material-ui/core/Button'
 
 const DROP_PIECE = 'DROP_PIECE'
@@ -30,7 +30,11 @@ const initialState: GameState = {
 }
 
 const dropPiece = (state: GameState, column: number): GameState => {
-  const board = new Board(state.currentPlayer, state.hasWinner, state.board)
+  const board = new ConnectFourBoard(
+    state.currentPlayer,
+    state.hasWinner,
+    state.board
+  )
   board.dropPiece(column)
   return board.getBoardState()
 }
@@ -71,7 +75,7 @@ const Game = () => {
     <GameContext.Provider value={value}>
       <div className="mainContainer">
         <div className="game">
-          <Grid grid={gameState.board} />
+          <Board grid={gameState.board} />
           <div className="startContainer">
             <Button
               fullWidth={true}

@@ -1,21 +1,21 @@
 import React from 'react'
 import Disk from '../Disk'
-import './Grid.css'
+import * as S from './styled'
 
 interface Props {
   grid: number[][]
 }
 
-const Grid: React.FC<Props> = ({ grid }) => (
-  <div className="grid">
+const Board: React.FC<Props> = ({ grid }) => (
+  <S.Grid>
     {grid.map((row, indexRow) => (
-      <div className="row" key={indexRow}>
+      <S.Row key={indexRow}>
         {row.map((_, indexDisk) => (
           <Disk key={indexDisk} row={indexRow} column={indexDisk} />
         ))}
-      </div>
+      </S.Row>
     ))}
-  </div>
+  </S.Grid>
 )
 
-export default Grid
+export default Board
