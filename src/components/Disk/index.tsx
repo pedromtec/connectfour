@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { GameContext } from '../Game'
+import { GameContext } from '../../GameContext'
 import WindowContext from '../../WindowContext'
 import Disk from './Disk'
 import AnimatedDisk from './AnimatedDisk'

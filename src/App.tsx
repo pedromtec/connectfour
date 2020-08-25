@@ -1,7 +1,7 @@
 import React from 'react'
-import './App.css'
 import Game from './components/Game'
 import WindowContext from './WindowContext'
+import GameContext from './GameContext'
 import { ThemeProvider } from 'styled-components'
 import dark from './styles/themes/dark'
 
@@ -12,11 +12,13 @@ const App = () => {
   return (
     <ThemeProvider theme={dark}>
       <WindowContext.WindowContextProvider>
-        <div className="App">
-          <GlobalStyle />
-          <Header />
-          <Game />
-        </div>
+        <GameContext.GameContextProvider>
+          <div className="App">
+            <GlobalStyle />
+            <Header />
+            <Game />
+          </div>
+        </GameContext.GameContextProvider>
       </WindowContext.WindowContextProvider>
     </ThemeProvider>
   )

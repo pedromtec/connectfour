@@ -14,4 +14,7 @@ export default createGlobalStyle`
     font-family: sans-serif;
     transition: all 0.50s linear;
   }
+  .App {
+    height: 100vh;
+  }
 `

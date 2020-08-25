@@ -1,9 +1,12 @@
-import React, { useReducer } from 'react'
-import './Game.css'
-import Board from './Grid'
+import React, {
+  useReducer,
+  ReactNode,
+  useContext,
+  useCallback,
+  useMemo
+} from 'react'
 import { createContext } from 'react'
-import ConnectFourBoard from '../utils/board'
-import Button from '@material-ui/core/Button'
+import ConnectFourBoard from './utils/board'
 
 const DROP_PIECE = 'DROP_PIECE'
 const START = 'START'
@@ -53,47 +56,51 @@ const reducer = (state = initialState, action: any) => {
 interface Context {
   gameState: GameState
   dropPiece: (column: number) => void
+  startGame: () => void
+}
+
+interface GameContextProps {
+  children: ReactNode
 }
 
 export const GameContext = createContext<Context | undefined>(undefined)
 
-const Game = () => {
+const GameContextProvider: React.FC<GameContextProps> = ({ children }) => {
   const [gameState, dispatch] = useReducer(reducer, initialState)
 
-  const dropPiece = (indexPiece: number) => {
+  const dropPiece = useCallback((indexPiece: number) => {
     dispatch({
       type: DROP_PIECE,
       col: indexPiece
     })
-  }
-  const value: Context = {
-    gameState,
-    dropPiece
-  }
+  }, [])
 
-  return (
-    <GameContext.Provider value={value}>
-      <div className="mainContainer">
-        <div className="game">
-          <Board grid={gameState.board} />
-          <div className="startContainer">
-            <Button
-              fullWidth={true}
-              variant="contained"
-              color="primary"
-              onClick={() =>
-                dispatch({
-                  type: START
-                })
-              }
-            >
-              Start
-            </Button>
-          </div>
-        </div>
-      </div>
-    </GameContext.Provider>
+  const startGame = useCallback(() => {
+    dispatch({
+      type: START
+    })
+  }, [])
+
+  const value: Context = useMemo(
+    () => ({
+      gameState,
+      dropPiece,
+      startGame
+    }),
+    [gameState, dropPiece, startGame]
   )
+
+  return <GameContext.Provider value={value}>{children}</GameContext.Provider>
 }
 
-export default Game
+const useGameContext = () => {
+  const context = useContext(GameContext)
+  if (context === undefined) {
+    throw new Error(
+      'useWindowContext must be used within a WindowContextProvider'
+    )
+  }
+  return context
+}
+
+export default { GameContextProvider, useGameContext }
