@@ -1,8 +1,7 @@
 import React from 'react'
-import './Game.css'
 import Board from '../Grid'
 import Button from '@material-ui/core/Button'
-
+import * as S from './styled'
 import GameContext from '../../GameContext'
 
 const { useGameContext } = GameContext
@@ -11,10 +10,10 @@ const Game = () => {
   const { gameState, startGame } = useGameContext()
 
   return (
-    <div className="mainContainer">
-      <div className="game">
+    <S.GameContainer>
+      <S.GameWrapper>
         <Board grid={gameState.board} />
-        <div className="startContainer">
+        <S.ButtonWrapper>
           <Button
             fullWidth={true}
             variant="contained"
@@ -23,9 +22,9 @@ const Game = () => {
           >
             Start
           </Button>
-        </div>
-      </div>
-    </div>
+        </S.ButtonWrapper>
+      </S.GameWrapper>
+    </S.GameContainer>
   )
 }
 
