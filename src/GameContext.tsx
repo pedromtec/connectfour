@@ -12,13 +12,15 @@ import { getMove } from './utils/minimax'
 
 const DROP_PIECE = 'DROP_PIECE'
 const START = 'START'
+const AGENT_PROCESSING = 'AGENT_PROCESSING'
+const PLAYER = 1
 
 interface GameState {
   hasWinner: boolean
   currentPlayer: number
   lastDrop: { row: number; column: number } | null
   board: number[][]
-  isAgentTurn: boolean
+  isAgentProcessing: boolean
 }
 
 const initialState: GameState = {
@@ -33,7 +35,7 @@ const initialState: GameState = {
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0]
   ],
-  isAgentTurn: false
+  isAgentProcessing: false
 }
 
 const dropPiece = (state: GameState, column: number): GameState => {
@@ -43,7 +45,7 @@ const dropPiece = (state: GameState, column: number): GameState => {
     state.board
   )
   board.dropPiece(column)
-  return board.getBoardState()
+  return { ...board.getBoardState(), isAgentProcessing: false }
 }
 
 const reducer = (state = initialState, action: any) => {
@@ -52,6 +54,11 @@ const reducer = (state = initialState, action: any) => {
       return dropPiece(state, action.col)
     case START:
       return { ...initialState }
+    case AGENT_PROCESSING:
+      return {
+        ...state,
+        isAgentProcessing: !state.isAgentProcessing
+      }
     default:
       return state
   }
@@ -74,14 +81,14 @@ const GameContextProvider: React.FC<GameContextProps> = ({ children }) => {
 
   const dropPiece = useCallback(
     (indexPiece: number) => {
-      if (!gameState.isAgentTurn) {
+      if (gameState.currentPlayer === PLAYER) {
         dispatch({
           type: DROP_PIECE,
           col: indexPiece
         })
       }
     },
-    [gameState.isAgentTurn]
+    [gameState.currentPlayer]
   )
 
   const startGame = useCallback(() => {
@@ -91,17 +98,27 @@ const GameContextProvider: React.FC<GameContextProps> = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    const aiMove = async () => {
-      if (gameState.isAgentTurn) {
-        const column = await getMove(gameState.board)
+    const aiMove = () => {
+      if (gameState.currentPlayer !== PLAYER && !gameState.hasWinner) {
         dispatch({
-          type: DROP_PIECE,
-          col: column
+          type: AGENT_PROCESSING
         })
+        getMove(gameState.board).then((column) => {
+          dispatch({
+            type: AGENT_PROCESSING
+          })
+          dispatch({
+            type: DROP_PIECE,
+            col: column
+          })
+        })
+        console.log('fast')
       }
     }
+    console.log('Ai will move')
     aiMove()
-  }, [gameState.isAgentTurn, gameState.board])
+    console.log('effect')
+  }, [gameState.currentPlayer, gameState.board, gameState.hasWinner])
 
   const value: Context = useMemo(
     () => ({

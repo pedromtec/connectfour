@@ -12,7 +12,7 @@ const Game = () => {
   return (
     <S.GameContainer>
       <S.GameWrapper>
-        {gameState.isAgentTurn && (
+        {gameState.isAgentProcessing && (
           <S.SpinnerWrapper>
             <CircularProgress size={40} color="secondary" thickness={5.5} />
           </S.SpinnerWrapper>
