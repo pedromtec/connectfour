@@ -5,6 +5,13 @@ const ONE = 1
 const TWO = 2
 const WINNER = 3
 
+export const BoardConfig = {
+  PLAYER: ONE,
+  AGENT: TWO,
+  ROWS,
+  COLUMNS
+}
+
 function newArray(len: number, value?: number) {
   return Array(len).fill(value)
 }
