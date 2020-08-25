@@ -1,6 +1,6 @@
 import React from 'react'
 import Board from '../Grid'
-import Button from '@material-ui/core/Button'
+import { CircularProgress, Button } from '@material-ui/core'
 import * as S from './styled'
 import GameContext from '../../GameContext'
 
@@ -12,6 +12,11 @@ const Game = () => {
   return (
     <S.GameContainer>
       <S.GameWrapper>
+        {gameState.isAgentTurn && (
+          <S.SpinnerWrapper>
+            <CircularProgress size={40} color="secondary" thickness={5.5} />
+          </S.SpinnerWrapper>
+        )}
         <Board grid={gameState.board} />
         <S.ButtonWrapper>
           <Button

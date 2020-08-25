@@ -39,7 +39,8 @@ export default class Board {
       hasWinner: this.hasWinner,
       lastDrop: this.lastDrop,
       currentPlayer: this.currentPlayer,
-      board: this.grid.map((row) => [...row])
+      board: this.grid.map((row) => [...row]),
+      isAgentTurn: this.currentPlayer !== 1
     }
   }
 

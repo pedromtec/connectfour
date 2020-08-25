@@ -3,10 +3,12 @@ import React, {
   ReactNode,
   useContext,
   useCallback,
-  useMemo
+  useMemo,
+  useEffect
 } from 'react'
 import { createContext } from 'react'
 import ConnectFourBoard from './utils/board'
+import { getMove } from './utils/minimax'
 
 const DROP_PIECE = 'DROP_PIECE'
 const START = 'START'
@@ -16,6 +18,7 @@ interface GameState {
   currentPlayer: number
   lastDrop: { row: number; column: number } | null
   board: number[][]
+  isAgentTurn: boolean
 }
 
 const initialState: GameState = {
@@ -29,7 +32,8 @@ const initialState: GameState = {
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0]
-  ]
+  ],
+  isAgentTurn: false
 }
 
 const dropPiece = (state: GameState, column: number): GameState => {
@@ -68,18 +72,36 @@ export const GameContext = createContext<Context | undefined>(undefined)
 const GameContextProvider: React.FC<GameContextProps> = ({ children }) => {
   const [gameState, dispatch] = useReducer(reducer, initialState)
 
-  const dropPiece = useCallback((indexPiece: number) => {
-    dispatch({
-      type: DROP_PIECE,
-      col: indexPiece
-    })
-  }, [])
+  const dropPiece = useCallback(
+    (indexPiece: number) => {
+      if (!gameState.isAgentTurn) {
+        dispatch({
+          type: DROP_PIECE,
+          col: indexPiece
+        })
+      }
+    },
+    [gameState.isAgentTurn]
+  )
 
   const startGame = useCallback(() => {
     dispatch({
       type: START
     })
   }, [])
+
+  useEffect(() => {
+    const aiMove = async () => {
+      if (gameState.isAgentTurn) {
+        const column = await getMove(gameState.board)
+        dispatch({
+          type: DROP_PIECE,
+          col: column
+        })
+      }
+    }
+    aiMove()
+  }, [gameState.isAgentTurn, gameState.board])
 
   const value: Context = useMemo(
     () => ({
