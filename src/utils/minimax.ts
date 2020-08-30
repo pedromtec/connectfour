@@ -109,9 +109,7 @@ function minimax(
 }
 
 export const getMove = async (board: number[][]) => {
-  console.log('called')
   const connectFourBoard = new ConnectFourBoard(BoardConfig.AGENT, false, board)
   const result = minimax(connectFourBoard, 7, true)
-  console.log('Finish')
   return result.column!
 }

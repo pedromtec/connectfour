@@ -1,17 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { GameContext } from '../../GameContext'
-import WindowContext from '../../WindowContext'
 import Disk from './Disk'
-import AnimatedDisk from './AnimatedDisk'
-
-const { useWindowContext } = WindowContext
 
 const colors: Record<number, string> = {
   1: '#8be9fd',
   2: '#f1fa8c'
 }
-
-type AnimationType = 'DROP' | 'WINNER' | 'NONE'
 
 const getDiskColor = (
   hasWinner: boolean,
@@ -30,33 +24,17 @@ const Index: React.FC<Props> = ({ row, column }) => {
 
   const {
     dropPiece,
-    gameState: { board, lastDrop, currentPlayer, hasWinner }
+    gameState: { board, currentPlayer, hasWinner }
   } = gameContext!
 
-  const { boardHeight } = useWindowContext()
-
-  const verticalTranslate = boardHeight - (5 - row) * (boardHeight / 6)
-
-  const isLastDrop =
-    lastDrop && lastDrop.row === row && lastDrop.column === column
   const diskValue = board[row][column]
 
-  const animationType: AnimationType =
-    diskValue === 3 ? 'WINNER' : isLastDrop ? 'DROP' : 'NONE'
-
-  const color = getDiskColor(hasWinner, currentPlayer, diskValue)
-
-  return animationType === 'NONE' ? (
-    <Disk color={color} handleClick={() => dropPiece(column)} />
-  ) : (
-    <AnimatedDisk
-      color={color}
-      handleClick={() => dropPiece(column)}
-      row={row}
-      verticalTranslate={verticalTranslate}
-      animationType={animationType}
-    />
+  const color = useMemo(
+    () => getDiskColor(hasWinner, currentPlayer, diskValue),
+    [hasWinner, currentPlayer, diskValue]
   )
+
+  return <Disk color={color} handleClick={() => dropPiece(column)} />
 }
 
 interface Props {
