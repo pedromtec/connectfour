@@ -6,9 +6,9 @@ import React, {
   useMemo,
   useEffect
 } from 'react'
+import axios from 'axios'
 import { createContext } from 'react'
 import ConnectFourBoard from './utils/board'
-import { getMove } from './utils/minimax'
 
 const DROP_PIECE = 'DROP_PIECE'
 const START = 'START'
@@ -57,7 +57,7 @@ const reducer = (state = initialState, action: any) => {
     case AGENT_PROCESSING:
       return {
         ...state,
-        isAgentProcessing: !state.isAgentProcessing
+        isAgentProcessing: true
       }
     default:
       return state
@@ -98,26 +98,22 @@ const GameContextProvider: React.FC<GameContextProps> = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    const aiMove = () => {
-      if (gameState.currentPlayer !== PLAYER && !gameState.hasWinner) {
-        dispatch({
-          type: AGENT_PROCESSING
+    if (gameState.currentPlayer !== PLAYER && !gameState.hasWinner) {
+      dispatch({
+        type: AGENT_PROCESSING
+      })
+      axios
+        .post(`http://localhost:8080/move`, {
+          board: gameState.board
         })
-        getMove(gameState.board).then((column) => {
-          dispatch({
-            type: AGENT_PROCESSING
-          })
+        .then((res) => {
+          console.log(res)
           dispatch({
             type: DROP_PIECE,
-            col: column
+            col: res.data.column
           })
         })
-        console.log('fast')
-      }
     }
-    console.log('Ai will move')
-    aiMove()
-    console.log('effect')
   }, [gameState.currentPlayer, gameState.board, gameState.hasWinner])
 
   const value: Context = useMemo(
