@@ -3,6 +3,7 @@ import Board from '../Grid'
 import { CircularProgress, Button } from '@material-ui/core'
 import * as S from './styled'
 import GameContext from '../../GameContext'
+import HeaderStatus from '../HeaderStatus'
 
 const { useGameContext } = GameContext
 
@@ -17,6 +18,9 @@ const Game = () => {
             <CircularProgress size={40} color="secondary" thickness={5.5} />
           </S.SpinnerWrapper>
         )}
+
+        <HeaderStatus player={gameState.currentPlayer} />
+
         <Board grid={gameState.board} />
         <S.ButtonWrapper>
           <Button
@@ -25,7 +29,7 @@ const Game = () => {
             color="primary"
             onClick={startGame}
           >
-            Start
+            {gameState.status === 'RUNNING' ? 'Restart' : 'Start'}
           </Button>
         </S.ButtonWrapper>
       </S.GameWrapper>

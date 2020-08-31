@@ -1,25 +1,23 @@
 import React from 'react'
 import Game from './components/Game'
-import WindowContext from './WindowContext'
 import GameContext from './GameContext'
 import { ThemeProvider } from 'styled-components'
 import dark from './styles/themes/dark'
 
 import GlobalStyle from './styles/global'
 import Header from './components/Header'
+import { Layout } from './components/Layout'
 
 const App = () => {
   return (
     <ThemeProvider theme={dark}>
-      <WindowContext.WindowContextProvider>
-        <GameContext.GameContextProvider>
-          <div className="App">
-            <GlobalStyle />
-            <Header />
-            <Game />
-          </div>
-        </GameContext.GameContextProvider>
-      </WindowContext.WindowContextProvider>
+      <GameContext.GameContextProvider>
+        <Layout>
+          <GlobalStyle />
+          <Header />
+          <Game />
+        </Layout>
+      </GameContext.GameContextProvider>
     </ThemeProvider>
   )
 }

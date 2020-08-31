@@ -15,7 +15,10 @@ const START = 'START'
 const AGENT_PROCESSING = 'AGENT_PROCESSING'
 const PLAYER = 1
 
+type GameStatus = 'RUNNING' | 'FINISHED' | 'NOT_INITIALIZED'
+
 interface GameState {
+  status: GameStatus
   hasWinner: boolean
   currentPlayer: number
   lastDrop: { row: number; column: number } | null
@@ -35,7 +38,8 @@ const initialState: GameState = {
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0]
   ],
-  isAgentProcessing: false
+  isAgentProcessing: false,
+  status: 'NOT_INITIALIZED'
 }
 
 const dropPiece = (state: GameState, column: number): GameState => {
@@ -48,12 +52,12 @@ const dropPiece = (state: GameState, column: number): GameState => {
   return { ...board.getBoardState(), isAgentProcessing: false }
 }
 
-const reducer = (state = initialState, action: any) => {
+const reducer = (state = initialState, action: any): GameState => {
   switch (action.type) {
     case DROP_PIECE:
       return dropPiece(state, action.col)
     case START:
-      return { ...initialState }
+      return { ...initialState, status: 'RUNNING' }
     case AGENT_PROCESSING:
       return {
         ...state,
@@ -81,14 +85,17 @@ const GameContextProvider: React.FC<GameContextProps> = ({ children }) => {
 
   const dropPiece = useCallback(
     (indexPiece: number) => {
-      if (gameState.currentPlayer === PLAYER) {
+      if (
+        gameState.currentPlayer === PLAYER &&
+        gameState.status === 'RUNNING'
+      ) {
         dispatch({
           type: DROP_PIECE,
           col: indexPiece
         })
       }
     },
-    [gameState.currentPlayer]
+    [gameState.currentPlayer, gameState.status]
   )
 
   const startGame = useCallback(() => {
@@ -98,23 +105,25 @@ const GameContextProvider: React.FC<GameContextProps> = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    if (gameState.currentPlayer !== PLAYER && !gameState.hasWinner) {
+    if (gameState.currentPlayer !== PLAYER && gameState.status === 'RUNNING') {
       dispatch({
         type: AGENT_PROCESSING
       })
-      axios
-        .post(`http://localhost:8080/move`, {
-          board: gameState.board
-        })
-        .then((res) => {
-          console.log(res)
-          dispatch({
-            type: DROP_PIECE,
-            col: res.data.column
+      setTimeout(() => {
+        axios
+          .post(`http://localhost:8080/move`, {
+            board: gameState.board
           })
-        })
+          .then((res) => {
+            console.log(res)
+            dispatch({
+              type: DROP_PIECE,
+              col: res.data.column
+            })
+          })
+      }, 200)
     }
-  }, [gameState.currentPlayer, gameState.board, gameState.hasWinner])
+  }, [gameState.currentPlayer, gameState.board, gameState.status])
 
   const value: Context = useMemo(
     () => ({
