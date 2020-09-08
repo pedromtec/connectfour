@@ -4,7 +4,8 @@ import React, {
   useContext,
   useCallback,
   useMemo,
-  useEffect
+  useEffect,
+  useState
 } from 'react'
 import axios from 'axios'
 import { createContext } from 'react'
@@ -12,6 +13,7 @@ import ConnectFourBoard from './utils/board'
 
 const DROP_PIECE = 'DROP_PIECE'
 const START = 'START'
+const RESTART = 'RESTART'
 const AGENT_PROCESSING = 'AGENT_PROCESSING'
 const PLAYER = 1
 
@@ -57,11 +59,20 @@ const reducer = (state = initialState, action: any): GameState => {
     case DROP_PIECE:
       return dropPiece(state, action.col)
     case START:
-      return { ...initialState, status: 'RUNNING' }
+      return {
+        ...initialState,
+        status: 'RUNNING',
+        currentPlayer: action.initialPlayer
+      }
     case AGENT_PROCESSING:
       return {
         ...state,
         isAgentProcessing: true
+      }
+    case RESTART:
+      return {
+        ...initialState,
+        status: 'NOT_INITIALIZED'
       }
     default:
       return state
@@ -71,7 +82,8 @@ const reducer = (state = initialState, action: any): GameState => {
 interface Context {
   gameState: GameState
   dropPiece: (column: number) => void
-  startGame: () => void
+  startGame: (initialPlayer: number, depth: number) => void
+  restartGame: () => void
 }
 
 interface GameContextProps {
@@ -82,6 +94,7 @@ export const GameContext = createContext<Context | undefined>(undefined)
 
 const GameContextProvider: React.FC<GameContextProps> = ({ children }) => {
   const [gameState, dispatch] = useReducer(reducer, initialState)
+  const [depth, setDepth] = useState<number>(5)
 
   const dropPiece = useCallback(
     (indexPiece: number) => {
@@ -98,9 +111,17 @@ const GameContextProvider: React.FC<GameContextProps> = ({ children }) => {
     [gameState.currentPlayer, gameState.status]
   )
 
-  const startGame = useCallback(() => {
+  const startGame = useCallback((initialPlayer: number, depth: number) => {
+    setDepth(depth)
     dispatch({
-      type: START
+      type: START,
+      initialPlayer
+    })
+  }, [])
+
+  const restartGame = useCallback(() => {
+    dispatch({
+      type: RESTART
     })
   }, [])
 
@@ -109,29 +130,30 @@ const GameContextProvider: React.FC<GameContextProps> = ({ children }) => {
       dispatch({
         type: AGENT_PROCESSING
       })
-      setTimeout(() => {
-        axios
-          .post(`http://localhost:8080/move`, {
-            board: gameState.board
-          })
-          .then((res) => {
-            console.log(res)
+      axios
+        .post(`http://localhost:8080/move`, {
+          board: gameState.board,
+          depth
+        })
+        .then(({ data }) => {
+          setTimeout(() => {
             dispatch({
               type: DROP_PIECE,
-              col: res.data.column
+              col: data.column
             })
-          })
-      }, 200)
+          }, 200)
+        })
     }
-  }, [gameState.currentPlayer, gameState.board, gameState.status])
+  }, [gameState.currentPlayer, gameState.board, gameState.status, depth])
 
   const value: Context = useMemo(
     () => ({
       gameState,
       dropPiece,
-      startGame
+      startGame,
+      restartGame
     }),
-    [gameState, dropPiece, startGame]
+    [gameState, dropPiece, startGame, restartGame]
   )
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>

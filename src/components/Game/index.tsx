@@ -4,14 +4,15 @@ import { CircularProgress, Button } from '@material-ui/core'
 import * as S from './styled'
 import GameContext from '../../GameContext'
 import HeaderStatus from '../HeaderStatus'
-
+import Menu from '../Menu'
 const { useGameContext } = GameContext
 
 const Game = () => {
-  const { gameState, startGame } = useGameContext()
+  const { gameState, startGame, restartGame } = useGameContext()
 
   return (
     <S.GameContainer>
+      {gameState.status === 'NOT_INITIALIZED' && <Menu startGame={startGame} />}
       <S.GameWrapper>
         {gameState.isAgentProcessing && (
           <S.SpinnerWrapper>
@@ -27,9 +28,9 @@ const Game = () => {
             fullWidth={true}
             variant="contained"
             color="primary"
-            onClick={startGame}
+            onClick={restartGame}
           >
-            {gameState.status === 'RUNNING' ? 'Restart' : 'Start'}
+            {gameState.status === 'FINISHED' ? 'New game' : 'Restart'}
           </Button>
         </S.ButtonWrapper>
       </S.GameWrapper>
