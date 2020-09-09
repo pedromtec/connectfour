@@ -131,7 +131,7 @@ const GameContextProvider: React.FC<GameContextProps> = ({ children }) => {
         type: AGENT_PROCESSING
       })
       axios
-        .post(`http://localhost:8080/move`, {
+        .post(`https://connectfour-api.herokuapp.com/move`, {
           board: gameState.board,
           depth
         })
