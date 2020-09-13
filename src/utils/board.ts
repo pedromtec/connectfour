@@ -5,6 +5,15 @@ const ONE = 1
 const TWO = 2
 const WINNER = 3
 
+export const BoardConfig = {
+  PLAYER: ONE,
+  AGENT: TWO,
+  ROWS,
+  COLUMNS
+}
+
+type GameStatus = 'RUNNING' | 'FINISHED' | 'NOT_INITIALIZED'
+
 function newArray(len: number, value?: number) {
   return Array(len).fill(value)
 }
@@ -17,10 +26,10 @@ export default class Board {
   lastDrop: { row: number; column: number } | null
   currentPlayer: number
   grid: number[][]
-  gameOver: boolean
   hasWinner: boolean
   emptyCells: number
   winner: number | null
+  status: GameStatus
 
   constructor(currentPlayer = ONE, hasWinner = false, grid: number[][]) {
     this.lastDrop = null
@@ -28,10 +37,10 @@ export default class Board {
     this.grid = grid
       ? grid.map((row) => [...row])
       : newArray(ROWS).map(() => newArray(COLUMNS, 0))
-    this.gameOver = false
     this.hasWinner = hasWinner
     this.emptyCells = ROWS * COLUMNS
     this.winner = null
+    this.status = 'RUNNING'
   }
 
   getBoardState() {
@@ -39,7 +48,8 @@ export default class Board {
       hasWinner: this.hasWinner,
       lastDrop: this.lastDrop,
       currentPlayer: this.currentPlayer,
-      board: this.grid.map((row) => [...row])
+      board: this.grid.map((row) => [...row]),
+      status: this.status
     }
   }
 
@@ -56,7 +66,7 @@ export default class Board {
   }
 
   dropPiece(column: number) {
-    if (this.gameOver || this.hasWinner) {
+    if (this.status === 'FINISHED' || this.hasWinner) {
       return false
     }
 
@@ -70,13 +80,13 @@ export default class Board {
     const winnerMoves = this.winnerMove(row, column)
     if (winnerMoves) {
       this.hasWinner = true
-      this.gameOver = true
+      this.status = 'FINISHED'
       this.winner = this.currentPlayer
       this.fillGrid(winnerMoves)
       return true
     }
     if (!this.emptyCells) {
-      this.gameOver = true
+      this.status = 'FINISHED'
     }
     this.changeTurn()
     return true
