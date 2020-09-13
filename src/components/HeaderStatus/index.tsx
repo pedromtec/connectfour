@@ -1,8 +1,6 @@
 import React from 'react'
 import Player from '../../assets/man.svg'
 import Agent from '../../assets/agent.svg'
-import RightArrow from '../../assets/right.svg'
-import LeftArrow from '../../assets/left.svg'
 import { BoardConfig } from '../../utils/board'
 import * as S from './styled'
 
@@ -11,21 +9,14 @@ interface Props {
 }
 
 const HeaderStatus: React.FC<Props> = ({ player }) => {
-  const isAgentTurn = player === BoardConfig.AGENT
-
   return (
     <S.Container>
       <S.Wrapper>
-        <S.AvatarContainer withColor={!isAgentTurn}>
-          <img src={Player} width="50px" height="50px" alt="" />
+        <S.AvatarContainer withColor={player === BoardConfig.PLAYER}>
+          <S.Avatar src={Player} alt="Player avatar" />
         </S.AvatarContainer>
-        {isAgentTurn ? (
-          <img src={RightArrow} width="50px" height="50px" alt="" />
-        ) : (
-          <img src={LeftArrow} width="50px" height="50px" alt="" />
-        )}
-        <S.AvatarContainer withColor={isAgentTurn}>
-          <img src={Agent} width="50px" height="50px" alt="" />
+        <S.AvatarContainer withColor={player === BoardConfig.AGENT}>
+          <S.Avatar src={Agent} alt="Bot avatar" />
         </S.AvatarContainer>
       </S.Wrapper>
     </S.Container>

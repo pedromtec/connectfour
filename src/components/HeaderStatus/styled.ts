@@ -25,3 +25,8 @@ export const AvatarContainer = styled.div`
   padding: 0.5rem;
   border-radius: 50%;
 `
+
+export const Avatar = styled.img`
+  width: 50px;
+  height: 50px;
+`
