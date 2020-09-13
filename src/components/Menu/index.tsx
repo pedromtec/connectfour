@@ -11,6 +11,7 @@ import {
   FormControlLabel,
   Radio
 } from '@material-ui/core'
+import { FieldContainer } from './styled'
 
 const levels = [
   { depth: 5, label: 'Easy' },
@@ -33,17 +34,10 @@ const Menu: React.FC<Props> = ({ startGame }) => {
   }
 
   return (
-    <Dialog aria-labelledby="simple-dialog-title" open={dialogIsOpen}>
+    <Dialog aria-labelledby="dialog-title" open={dialogIsOpen}>
       <DialogTitle>A new game will start!</DialogTitle>
       <FormControl>
-        <div
-          style={{
-            width: '100%',
-            paddingRight: '2rem',
-            paddingLeft: '2rem',
-            paddingBottom: '1rem'
-          }}
-        >
+        <FieldContainer>
           <FormLabel component="legend">Who starts?</FormLabel>
           <RadioGroup
             row
@@ -64,19 +58,12 @@ const Menu: React.FC<Props> = ({ startGame }) => {
               label="Machine"
             />
           </RadioGroup>
-        </div>
-        <div
-          style={{
-            width: '100%',
-            paddingRight: '2rem',
-            paddingLeft: '2rem',
-            paddingBottom: '1rem'
-          }}
-        >
+        </FieldContainer>
+        <FieldContainer>
           <FormLabel component="legend">Level</FormLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId="select-label"
+            id="select"
             value={level}
             onChange={(e) => setLevel(Number(e.target.value))}
           >
@@ -86,15 +73,8 @@ const Menu: React.FC<Props> = ({ startGame }) => {
               </MenuItem>
             ))}
           </Select>
-        </div>
-        <div
-          style={{
-            paddingBottom: '1rem',
-            width: '100%',
-            paddingRight: '2rem',
-            paddingLeft: '2rem'
-          }}
-        >
+        </FieldContainer>
+        <FieldContainer>
           <Button
             fullWidth={true}
             variant="contained"
@@ -103,7 +83,7 @@ const Menu: React.FC<Props> = ({ startGame }) => {
           >
             Start
           </Button>
-        </div>
+        </FieldContainer>
       </FormControl>
     </Dialog>
   )
