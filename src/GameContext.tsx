@@ -162,9 +162,7 @@ const GameContextProvider: React.FC<GameContextProps> = ({ children }) => {
 const useGameContext = () => {
   const context = useContext(GameContext)
   if (context === undefined) {
-    throw new Error(
-      'useWindowContext must be used within a WindowContextProvider'
-    )
+    throw new Error('useGameContext must be used within a GameContextProvider')
   }
   return context
 }
