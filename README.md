@@ -1,8 +1,8 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 # ConnectFour
 
-Connect Four is a two-player board game, in which the players choose a disk and then take turns dropping disks into a seven-column, six-row vertically grid. The game goal is to be the first player to form a horizontal, vertical, or diagonal line of four disks with the same color.
+Connect Four is a two-player board game, in which the players choose a disk and then take turns dropping disks into a seven-column, six-row vertically grid. The game goal is to be the first player to form a horizontal, vertical, or diagonal line of four disks.
+
+This project implements a strong `bot` to play this board game.
 
 ![Image](./metadata/connectfour.png)
 
