@@ -16,21 +16,20 @@ export const Wrapper = styled.div`
 `
 
 interface Props {
-  withColor: boolean
+  paddingBottom: boolean
 }
 
-export const AvatarContainer = styled.div`
-  border: ${(props: Props) =>
-    props.withColor ? 'solid 2px green' : 'solid 0px'};
-  padding: 0.5rem;
-  border-radius: 50%;
+export const Avatar = styled.img`
+  width: 100%;
+  height: 100%;
 `
 
-export const Avatar = styled.img`
+export const AvatarContainer = styled.div`
   width: 30px;
   height: 30px;
   @media (min-width: 600px) {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
   }
+  padding-bottom: ${(props: Props) => (props.paddingBottom ? '1rem' : '0')};
 `

@@ -141,7 +141,7 @@ const GameContextProvider: React.FC<GameContextProps> = ({ children }) => {
               type: DROP_PIECE,
               col: data.column
             })
-          }, 200)
+          }, 1000)
         })
     }
   }, [gameState.currentPlayer, gameState.board, gameState.status, depth])
