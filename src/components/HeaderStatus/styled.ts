@@ -31,5 +31,5 @@ export const AvatarContainer = styled.div`
     width: 70px;
     height: 70px;
   }
-  padding-bottom: ${(props: Props) => (props.paddingBottom ? '1rem' : '0')};
+  padding-bottom: ${(props: Props) => (props.paddingBottom ? '0.8rem' : '0')};
 `
