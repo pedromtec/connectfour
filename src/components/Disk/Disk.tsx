@@ -1,10 +1,34 @@
 import React from 'react'
 import * as S from './styled'
 
-const Disk: React.FC<Props> = ({ color, handleClick }) => {
+export type AnimationType = 'WINNER' | 'DROP' | 'NONE'
+
+const Disk: React.FC<Props> = ({
+  color,
+  handleClick,
+  animationType,
+  time,
+  height
+}) => {
+  console.log(animationType === 'DROP')
   return (
     <S.DiskWrapper>
-      <S.Disk diskColor={color} onClick={handleClick} />
+      {animationType === 'WINNER' && (
+        <S.WinnerDisk diskColor={color} onClick={handleClick} />
+      )}
+
+      {animationType === 'NONE' && (
+        <S.Disk diskColor={color} onClick={handleClick} />
+      )}
+
+      {animationType === 'DROP' && (
+        <S.DropDisk
+          diskColor={color}
+          onClick={handleClick}
+          time={time}
+          height={height}
+        />
+      )}
     </S.DiskWrapper>
   )
 }
@@ -12,6 +36,9 @@ const Disk: React.FC<Props> = ({ color, handleClick }) => {
 interface Props {
   color: string
   handleClick: () => void
+  animationType: AnimationType
+  time?: string
+  height?: number
 }
 
 export default React.memo(Disk)
