@@ -4,11 +4,13 @@ import * as S from './styled'
 import Bot from '../../assets/bot.json'
 import Human from '../../assets/human.json'
 import Lottie from 'react-lottie'
+import Loading from '../Loading'
 interface Props {
   player: number
+  isAgentProcessing: boolean
 }
 
-const HeaderStatus: React.FC<Props> = ({ player }) => {
+const HeaderStatus: React.FC<Props> = ({ player, isAgentProcessing }) => {
   const BotDefaultOptions = {
     loop: true,
     autoplay: false,
@@ -36,6 +38,7 @@ const HeaderStatus: React.FC<Props> = ({ player }) => {
             isStopped={player !== BoardConfig.PLAYER}
           />
         </S.AvatarContainer>
+        {isAgentProcessing && <Loading message="loading..." />}
         <S.AvatarContainer paddingBottom={false}>
           <Lottie
             options={BotDefaultOptions}

@@ -43,7 +43,6 @@ export const WinnerDisk = styled(Disk)`
 `
 
 const moveVertically = (y: number) => {
-  console.log('caled')
   return keyframes`
     0% {
       transform: translateY(${y}px);
