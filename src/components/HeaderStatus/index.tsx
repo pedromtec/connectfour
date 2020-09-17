@@ -10,38 +10,28 @@ interface Props {
   isAgentProcessing: boolean
 }
 
+const defaultOptions = {
+  loop: true,
+  autoplay: false,
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice'
+  }
+}
+
 const HeaderStatus: React.FC<Props> = ({ player, isAgentProcessing }) => {
-  const BotDefaultOptions = {
-    loop: true,
-    autoplay: false,
-    animationData: Bot,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice'
-    }
-  }
-
-  const HumanDefaultOptions = {
-    loop: true,
-    autoplay: false,
-    animationData: Human,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice'
-    }
-  }
-
   return (
     <S.Container>
       <S.Wrapper>
         <S.AvatarContainer paddingBottom={true}>
           <Lottie
-            options={HumanDefaultOptions}
+            options={{ ...defaultOptions, animationData: Human }}
             isStopped={player !== BoardConfig.PLAYER}
           />
         </S.AvatarContainer>
         {isAgentProcessing && <Loading message="loading..." />}
         <S.AvatarContainer paddingBottom={false}>
           <Lottie
-            options={BotDefaultOptions}
+            options={{ ...defaultOptions, animationData: Bot }}
             isStopped={player !== BoardConfig.AGENT}
           />
         </S.AvatarContainer>
