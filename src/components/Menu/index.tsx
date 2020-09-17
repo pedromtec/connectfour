@@ -14,9 +14,9 @@ import {
 import { FieldContainer } from './styled'
 
 const levels = [
-  { depth: 5, label: 'Easy' },
-  { depth: 6, label: 'Medium' },
-  { depth: 7, label: 'Hard' }
+  { depth: 4, label: 'Easy' },
+  { depth: 5, label: 'Medium' },
+  { depth: 6, label: 'Hard' }
 ]
 
 interface Props {

@@ -11,7 +11,7 @@ export default createGlobalStyle`
     background: ${(props) => props.theme.colors.background};
     font-size: 14px;
     color: ${(props) => props.theme.colors.text};
-    font-family: sans-serif;
+    font-family: 'Press Start 2P', cursive;
     transition: all 0.50s linear;
   }
   .App {
