@@ -11,7 +11,7 @@ import ReactGa from 'react-ga'
 
 const App = () => {
   useEffect(() => {
-    ReactGa.initialize('UA-1779467861-1')
+    ReactGa.initialize('UA-177946786-1')
     ReactGa.pageview('/')
   }, [])
 
