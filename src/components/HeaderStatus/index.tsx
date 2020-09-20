@@ -1,13 +1,15 @@
 import React from 'react'
-import { BoardConfig } from '../../utils/board'
+import { BoardInfo, BotInfo } from '../../utils/board'
 import * as S from './styled'
-import Bot from '../../assets/bot.json'
+import AlphaStar from '../../assets/bot.json'
+import SkyConnect from '../../assets/bot2.json'
 import Human from '../../assets/human.json'
 import Lottie from 'react-lottie'
 import Loading from '../Loading'
 interface Props {
   player: number
   isAgentProcessing: boolean
+  selectedBot: number
 }
 
 const defaultOptions = {
@@ -18,21 +20,29 @@ const defaultOptions = {
   }
 }
 
-const HeaderStatus: React.FC<Props> = ({ player, isAgentProcessing }) => {
+const HeaderStatus: React.FC<Props> = ({
+  player,
+  isAgentProcessing,
+  selectedBot
+}) => {
   return (
     <S.Container>
       <S.Wrapper>
         <S.AvatarContainer paddingBottom={true}>
           <Lottie
             options={{ ...defaultOptions, animationData: Human }}
-            isStopped={player !== BoardConfig.PLAYER}
+            isStopped={player !== BoardInfo.PLAYER}
           />
         </S.AvatarContainer>
         {isAgentProcessing && <Loading message="loading..." />}
         <S.AvatarContainer paddingBottom={false}>
           <Lottie
-            options={{ ...defaultOptions, animationData: Bot }}
-            isStopped={player !== BoardConfig.AGENT}
+            options={{
+              ...defaultOptions,
+              animationData:
+                selectedBot === BotInfo.MINIMAX ? SkyConnect : AlphaStar
+            }}
+            isStopped={player !== BoardInfo.BOT}
           />
         </S.AvatarContainer>
       </S.Wrapper>

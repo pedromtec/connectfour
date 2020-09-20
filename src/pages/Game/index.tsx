@@ -1,10 +1,10 @@
 import React from 'react'
-import Board from '../Grid'
+import Board from '../../components/Grid'
 import { Button } from '@material-ui/core'
 import * as S from './styled'
 import GameContext from '../../GameContext'
-import HeaderStatus from '../HeaderStatus'
-import Menu from '../Menu'
+import HeaderStatus from '../../components/HeaderStatus'
+import Menu from '../../components/Menu'
 const { useGameContext } = GameContext
 
 const Game = () => {
@@ -12,11 +12,14 @@ const Game = () => {
 
   return (
     <S.GameContainer>
-      {gameState.status === 'NOT_INITIALIZED' && <Menu startGame={startGame} />}
+      {gameState.status === 'NOT_INITIALIZED' && (
+        <Menu startGame={startGame} selectedBot={gameState.selectedBot} />
+      )}
       <S.GameWrapper>
         <HeaderStatus
           player={gameState.currentPlayer}
           isAgentProcessing={gameState.isAgentProcessing}
+          selectedBot={gameState.selectedBot}
         />
 
         <Board grid={gameState.board} />
@@ -35,4 +38,19 @@ const Game = () => {
   )
 }
 
-export default Game
+interface Location {
+  state?: { selectedBot: number }
+}
+interface Props {
+  location: Location
+}
+
+const GameWithContext = (props: Props) => (
+  <GameContext.GameContextProvider
+    selectedBot={props.location.state?.selectedBot}
+  >
+    <Game />
+  </GameContext.GameContextProvider>
+)
+
+export default GameWithContext

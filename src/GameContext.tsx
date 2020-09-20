@@ -9,13 +9,14 @@ import React, {
 } from 'react'
 import axios from 'axios'
 import { createContext } from 'react'
-import ConnectFourBoard from './utils/board'
+import ConnectFourBoard, { BoardInfo, BotInfo } from './utils/board'
+import { useHistory } from 'react-router-dom'
 
 const DROP_PIECE = 'DROP_PIECE'
 const START = 'START'
 const RESTART = 'RESTART'
 const AGENT_PROCESSING = 'AGENT_PROCESSING'
-const PLAYER = 1
+const SET_BOT = 'SET_BOT'
 
 type GameStatus = 'RUNNING' | 'FINISHED' | 'NOT_INITIALIZED'
 
@@ -23,6 +24,7 @@ interface GameState {
   status: GameStatus
   hasWinner: boolean
   currentPlayer: number
+  selectedBot: number
   lastDrop: { row: number; column: number } | null
   board: number[][]
   isAgentProcessing: boolean
@@ -31,6 +33,7 @@ interface GameState {
 const initialState: GameState = {
   hasWinner: false,
   currentPlayer: 1,
+  selectedBot: BotInfo.MINIMAX,
   lastDrop: null,
   board: [
     [0, 0, 0, 0, 0, 0, 0],
@@ -51,7 +54,11 @@ const dropPiece = (state: GameState, column: number): GameState => {
     state.board
   )
   board.dropPiece(column)
-  return { ...board.getBoardState(), isAgentProcessing: false }
+  return {
+    ...board.getBoardState(),
+    isAgentProcessing: false,
+    selectedBot: state.selectedBot
+  }
 }
 
 const reducer = (state = initialState, action: any): GameState => {
@@ -62,7 +69,8 @@ const reducer = (state = initialState, action: any): GameState => {
       return {
         ...initialState,
         status: 'RUNNING',
-        currentPlayer: action.initialPlayer
+        currentPlayer: action.initialPlayer,
+        selectedBot: action.selectedBot
       }
     case AGENT_PROCESSING:
       return {
@@ -74,6 +82,11 @@ const reducer = (state = initialState, action: any): GameState => {
         ...initialState,
         status: 'NOT_INITIALIZED'
       }
+    case SET_BOT:
+      return {
+        ...state,
+        selectedBot: action.selectedBot
+      }
     default:
       return state
   }
@@ -82,24 +95,40 @@ const reducer = (state = initialState, action: any): GameState => {
 interface Context {
   gameState: GameState
   dropPiece: (column: number) => void
-  startGame: (initialPlayer: number, depth: number) => void
+  startGame: (initialPlayer: number, selectedBot: number, depth: number) => void
   restartGame: () => void
+  setSelectedBot: (selectedBot: number) => void
 }
 
 interface GameContextProps {
   children: ReactNode
+  selectedBot?: number
 }
 
 export const GameContext = createContext<Context | undefined>(undefined)
 
-const GameContextProvider: React.FC<GameContextProps> = ({ children }) => {
+const GameContextProvider: React.FC<GameContextProps> = ({
+  children,
+  selectedBot
+}) => {
   const [gameState, dispatch] = useReducer(reducer, initialState)
-  const [depth, setDepth] = useState<number>(5)
+  const [depth, setDepth] = useState<number | undefined>(undefined)
+  const history = useHistory()
+
+  useEffect(() => {
+    if (!selectedBot) {
+      history.push('/')
+    }
+    dispatch({
+      type: SET_BOT,
+      selectedBot
+    })
+  }, [selectedBot, history])
 
   const dropPiece = useCallback(
     (indexPiece: number) => {
       if (
-        gameState.currentPlayer === PLAYER &&
+        gameState.currentPlayer === BoardInfo.PLAYER &&
         gameState.status === 'RUNNING'
       ) {
         dispatch({
@@ -111,13 +140,24 @@ const GameContextProvider: React.FC<GameContextProps> = ({ children }) => {
     [gameState.currentPlayer, gameState.status]
   )
 
-  const startGame = useCallback((initialPlayer: number, depth: number) => {
-    setDepth(depth)
+  const setSelectedBot = useCallback((selectedBot: number) => {
     dispatch({
-      type: START,
-      initialPlayer
+      type: SET_BOT,
+      selectedBot
     })
   }, [])
+
+  const startGame = useCallback(
+    (initialPlayer: number, depth: number, selectedBot: number) => {
+      setDepth(depth)
+      dispatch({
+        type: START,
+        initialPlayer,
+        selectedBot
+      })
+    },
+    []
+  )
 
   const restartGame = useCallback(() => {
     dispatch({
@@ -126,12 +166,16 @@ const GameContextProvider: React.FC<GameContextProps> = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    if (gameState.currentPlayer !== PLAYER && gameState.status === 'RUNNING') {
+    if (
+      gameState.currentPlayer !== BoardInfo.PLAYER &&
+      gameState.status === 'RUNNING'
+    ) {
       dispatch({
         type: AGENT_PROCESSING
       })
       axios
         .post(`https://connectfour-api.herokuapp.com/move`, {
+          bot: gameState.selectedBot,
           board: gameState.board,
           depth
         })
@@ -144,16 +188,23 @@ const GameContextProvider: React.FC<GameContextProps> = ({ children }) => {
           }, 1000)
         })
     }
-  }, [gameState.currentPlayer, gameState.board, gameState.status, depth])
+  }, [
+    gameState.currentPlayer,
+    gameState.board,
+    gameState.status,
+    gameState.selectedBot,
+    depth
+  ])
 
   const value: Context = useMemo(
     () => ({
       gameState,
       dropPiece,
       startGame,
-      restartGame
+      restartGame,
+      setSelectedBot
     }),
-    [gameState, dropPiece, startGame, restartGame]
+    [gameState, dropPiece, startGame, restartGame, setSelectedBot]
   )
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>
