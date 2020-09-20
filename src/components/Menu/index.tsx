@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Dialog,
   DialogTitle,
@@ -12,25 +12,32 @@ import {
   Radio
 } from '@material-ui/core'
 import { FieldContainer } from './styled'
-
-const levels = [
-  { depth: 4, label: 'Easy' },
-  { depth: 5, label: 'Medium' },
-  { depth: 6, label: 'Hard' }
-]
+import { BotLevels } from '../../utils/board'
 
 interface Props {
-  startGame: (initialPlayer: number, level: number) => void
+  selectedBot: number
+  startGame: (initialPlayer: number, selectedBot: number, level: number) => void
 }
 
-const Menu: React.FC<Props> = ({ startGame }) => {
+const Menu: React.FC<Props> = ({ startGame, selectedBot }) => {
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(true)
   const [initialPlayer, setInitialPlayer] = useState<number>(1)
-  const [level, setLevel] = useState<number>(5)
+
+  const levels = BotLevels[selectedBot]
+
+  const [selectedLevel, setSelectedLevel] = useState<number | undefined>(
+    undefined
+  )
+
+  useEffect(() => {
+    setSelectedLevel(levels[0].depth)
+  }, [levels])
 
   const handleClick = () => {
-    setDialogIsOpen(false)
-    startGame(initialPlayer, level)
+    if (selectedLevel) {
+      setDialogIsOpen(false)
+      startGame(initialPlayer, selectedLevel, selectedBot)
+    }
   }
 
   return (
@@ -64,8 +71,8 @@ const Menu: React.FC<Props> = ({ startGame }) => {
           <Select
             labelId="select-label"
             id="select"
-            value={level}
-            onChange={(e) => setLevel(Number(e.target.value))}
+            value={selectedLevel}
+            onChange={(e) => setSelectedLevel(Number(e.target.value))}
           >
             {levels.map((level) => (
               <MenuItem value={level.depth} key={level.depth}>

@@ -10,7 +10,6 @@ const Disk: React.FC<Props> = ({
   time,
   height
 }) => {
-  console.log(animationType === 'DROP')
   return (
     <S.DiskWrapper>
       {animationType === 'WINNER' && (

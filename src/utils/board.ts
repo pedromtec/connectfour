@@ -5,11 +5,31 @@ const ONE = 1
 const TWO = 2
 const WINNER = 3
 
-export const BoardConfig = {
+export const BotInfo = {
+  MINIMAX: 1,
+  ALPHA_BETA: 2
+}
+
+export const BoardInfo = {
   PLAYER: ONE,
-  AGENT: TWO,
+  BOT: TWO,
+  WINNER,
+  EMPTY,
   ROWS,
   COLUMNS
+}
+
+export const BotLevels = {
+  [BotInfo.MINIMAX]: [
+    { depth: 4, label: 'Easy' },
+    { depth: 5, label: 'Medium' },
+    { depth: 6, label: 'Hard' }
+  ],
+  [BotInfo.ALPHA_BETA]: [
+    { depth: 6, label: 'Easy' },
+    { depth: 7, label: 'Medium' },
+    { depth: 8, label: 'Hard' }
+  ]
 }
 
 type GameStatus = 'RUNNING' | 'FINISHED' | 'NOT_INITIALIZED'

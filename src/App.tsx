@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import Game from './components/Game'
-import GameContext from './GameContext'
+import Game from './pages/Game'
+import Home from './pages/Home'
 import { ThemeProvider } from 'styled-components'
 import dark from './styles/themes/dark'
 
@@ -8,22 +8,26 @@ import GlobalStyle from './styles/global'
 import Header from './components/Header'
 import { Layout } from './components/Layout'
 import ReactGa from 'react-ga'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 const App = () => {
   useEffect(() => {
     ReactGa.initialize('UA-177946786-1')
-    ReactGa.pageview('/')
+    ReactGa.pageview(window.location.pathname + window.location.search)
   }, [])
 
   return (
     <ThemeProvider theme={dark}>
-      <GameContext.GameContextProvider>
-        <Layout>
-          <GlobalStyle />
+      <Layout>
+        <GlobalStyle />
+        <BrowserRouter>
           <Header />
-          <Game />
-        </Layout>
-      </GameContext.GameContextProvider>
+          <Switch>
+            <Route path="/" component={Home} exact />
+            <Route path="/game" component={Game} />
+          </Switch>
+        </BrowserRouter>
+      </Layout>
     </ThemeProvider>
   )
 }
