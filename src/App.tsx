@@ -13,7 +13,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 const App = () => {
   useEffect(() => {
     ReactGa.initialize('UA-177946786-1')
-    ReactGa.pageview('/')
+    ReactGa.pageview(window.location.pathname + window.location.search)
   }, [])
 
   return (
