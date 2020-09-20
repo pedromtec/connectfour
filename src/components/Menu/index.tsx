@@ -24,7 +24,6 @@ const Menu: React.FC<Props> = ({ startGame, selectedBot }) => {
   const [initialPlayer, setInitialPlayer] = useState<number>(1)
 
   const levels = BotLevels[selectedBot]
-  console.log(levels[0])
 
   const [selectedLevel, setSelectedLevel] = useState<number | undefined>(
     undefined
