@@ -80,6 +80,7 @@ const reducer = (state = initialState, action: any): GameState => {
     case RESTART:
       return {
         ...initialState,
+        selectedBot: state.selectedBot,
         status: 'NOT_INITIALIZED'
       }
     case SET_BOT:
