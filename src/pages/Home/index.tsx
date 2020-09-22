@@ -17,7 +17,10 @@ const Home: React.FC = () => {
       <S.Wrapper>
         <S.InfoContainer>
           <Avatar bot={BotInfo.MINIMAX} withAnimation={true} />
-          <S.FieldMessage>Sky Connect</S.FieldMessage>
+          <S.FieldName>Sky Connect</S.FieldName>
+          <S.FieldDescription>
+            Learn to play Connect Four with <i>Sky Connect</i>.
+          </S.FieldDescription>
           <Button
             fullWidth={true}
             variant="contained"
@@ -29,7 +32,11 @@ const Home: React.FC = () => {
         </S.InfoContainer>
         <S.InfoContainer>
           <Avatar bot={BotInfo.ALPHA_BETA} withAnimation={true} />
-          <S.FieldMessage>Alpha Star</S.FieldMessage>
+          <S.FieldName>Alpha Star</S.FieldName>
+          <S.FieldDescription>
+            Are you looking for a challenge? <i>Alpha Star</i> is the right
+            choice.
+          </S.FieldDescription>
           <Button
             fullWidth={true}
             variant="contained"
