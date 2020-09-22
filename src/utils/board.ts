@@ -42,6 +42,18 @@ function isOut(row: number, col: number) {
   return row < 0 || row >= ROWS || col < 0 || col >= COLUMNS
 }
 
+export const countNoEmptyCells = (board: number[][]) => {
+  let count = 0
+  board.forEach((row, indexRow) => {
+    row.forEach((col, indexCol) => {
+      if (board[indexRow][indexCol] !== BoardInfo.EMPTY) {
+        count++
+      }
+    })
+  })
+  return count
+}
+
 export default class Board {
   lastDrop: { row: number; column: number } | null
   currentPlayer: number
@@ -58,7 +70,7 @@ export default class Board {
       ? grid.map((row) => [...row])
       : newArray(ROWS).map(() => newArray(COLUMNS, 0))
     this.hasWinner = hasWinner
-    this.emptyCells = ROWS * COLUMNS
+    this.emptyCells = ROWS * COLUMNS - countNoEmptyCells(grid)
     this.winner = null
     this.status = 'RUNNING'
   }
