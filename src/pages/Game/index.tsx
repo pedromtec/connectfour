@@ -20,6 +20,7 @@ const Game = () => {
           player={gameState.currentPlayer}
           isAgentProcessing={gameState.isAgentProcessing}
           selectedBot={gameState.selectedBot}
+          status={gameState.status}
         />
 
         <Board grid={gameState.board} />

@@ -10,6 +10,7 @@ interface Props {
   player: number
   isAgentProcessing: boolean
   selectedBot: number
+  status: string
 }
 
 const defaultOptions = {
@@ -23,15 +24,18 @@ const defaultOptions = {
 const HeaderStatus: React.FC<Props> = ({
   player,
   isAgentProcessing,
-  selectedBot
+  selectedBot,
+  status
 }) => {
+  const isRunning = status === 'RUNNING'
+
   return (
     <S.Container>
       <S.Wrapper>
         <S.AvatarContainer paddingBottom={true}>
           <Lottie
             options={{ ...defaultOptions, animationData: Human }}
-            isStopped={player !== BoardInfo.PLAYER}
+            isStopped={!isRunning || player !== BoardInfo.PLAYER}
           />
         </S.AvatarContainer>
         {isAgentProcessing && <Loading message="loading..." />}
@@ -42,7 +46,7 @@ const HeaderStatus: React.FC<Props> = ({
               animationData:
                 selectedBot === BotInfo.MINIMAX ? SkyConnect : AlphaStar
             }}
-            isStopped={player !== BoardInfo.BOT}
+            isStopped={!isRunning || player !== BoardInfo.BOT}
           />
         </S.AvatarContainer>
       </S.Wrapper>

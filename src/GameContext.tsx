@@ -9,7 +9,12 @@ import React, {
 } from 'react'
 import axios from 'axios'
 import { createContext } from 'react'
-import ConnectFourBoard, { BoardInfo, BotInfo } from './utils/board'
+import ConnectFourBoard, {
+  BoardInfo,
+  BotInfo,
+  countNoEmptyCells
+} from './utils/board'
+import { initialStateBoard } from './utils/mockedGrids'
 import { useHistory } from 'react-router-dom'
 import { matchesRef } from './firebase'
 
@@ -36,30 +41,26 @@ const initialState: GameState = {
   currentPlayer: 1,
   selectedBot: BotInfo.MINIMAX,
   lastDrop: null,
-  board: [
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0]
-  ],
+  board: initialStateBoard,
   isAgentProcessing: false,
   status: 'NOT_INITIALIZED'
 }
 
 const dropPiece = (state: GameState, column: number): GameState => {
-  const board = new ConnectFourBoard(
-    state.currentPlayer,
-    state.hasWinner,
-    state.board
-  )
-  board.dropPiece(column)
-  return {
-    ...board.getBoardState(),
-    isAgentProcessing: false,
-    selectedBot: state.selectedBot
+  if (state.status === 'RUNNING') {
+    const board = new ConnectFourBoard(
+      state.currentPlayer,
+      state.hasWinner,
+      state.board
+    )
+    board.dropPiece(column)
+    return {
+      ...board.getBoardState(),
+      isAgentProcessing: false,
+      selectedBot: state.selectedBot
+    }
   }
+  return state
 }
 
 const reducer = (state = initialState, action: any): GameState => {
@@ -109,18 +110,6 @@ interface GameContextProps {
 
 export const GameContext = createContext<Context | undefined>(undefined)
 
-const countBotDrops = (board: number[][]) => {
-  let count = 0
-  board.forEach((row, indexRow) => {
-    row.forEach((col, indexCol) => {
-      if (board[indexRow][indexCol] !== BoardInfo.EMPTY) {
-        count++
-      }
-    })
-  })
-  return count
-}
-
 const GameContextProvider: React.FC<GameContextProps> = ({
   children,
   selectedBot
@@ -144,7 +133,7 @@ const GameContextProvider: React.FC<GameContextProps> = ({
       const newMatch = {
         botType: gameState.selectedBot,
         status: gameState.hasWinner ? gameState.currentPlayer : 0,
-        drops: countBotDrops(gameState.board),
+        drops: countNoEmptyCells(gameState.board),
         depth
       }
       matchesRef.push(newMatch)
