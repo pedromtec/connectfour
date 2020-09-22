@@ -19,8 +19,16 @@ export const Wrapper = styled.div`
   justify-content: space-around;
   flex-wrap: wrap;
 `
-export const FieldMessage = styled.span`
+export const FieldName = styled.span`
+  text-align: center;
   padding-bottom: 1rem;
+  font-size: 1rem;
+`
+export const FieldDescription = styled.span`
+  text-align: center;
+  padding-bottom: 1rem;
+  font-size: 0.75rem;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 `
 export const InfoContainer = styled.div`
   border-radius: 0.5rem;
@@ -31,4 +39,5 @@ export const InfoContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: 1rem;
+  max-width: 250px;
 `
