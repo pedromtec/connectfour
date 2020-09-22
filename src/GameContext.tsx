@@ -49,17 +49,20 @@ const initialState: GameState = {
 }
 
 const dropPiece = (state: GameState, column: number): GameState => {
-  const board = new ConnectFourBoard(
-    state.currentPlayer,
-    state.hasWinner,
-    state.board
-  )
-  board.dropPiece(column)
-  return {
-    ...board.getBoardState(),
-    isAgentProcessing: false,
-    selectedBot: state.selectedBot
+  if (state.status === 'RUNNING') {
+    const board = new ConnectFourBoard(
+      state.currentPlayer,
+      state.hasWinner,
+      state.board
+    )
+    board.dropPiece(column)
+    return {
+      ...board.getBoardState(),
+      isAgentProcessing: false,
+      selectedBot: state.selectedBot
+    }
   }
+  return state
 }
 
 const reducer = (state = initialState, action: any): GameState => {
