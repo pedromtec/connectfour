@@ -11,6 +11,7 @@ import axios from 'axios'
 import { createContext } from 'react'
 import ConnectFourBoard, { BoardInfo, BotInfo } from './utils/board'
 import { useHistory } from 'react-router-dom'
+import { matchesRef } from './firebase'
 
 const DROP_PIECE = 'DROP_PIECE'
 const START = 'START'
@@ -108,6 +109,18 @@ interface GameContextProps {
 
 export const GameContext = createContext<Context | undefined>(undefined)
 
+const countBotDrops = (board: number[][]) => {
+  let count = 0
+  board.forEach((row, indexRow) => {
+    row.forEach((col, indexCol) => {
+      if (board[indexRow][indexCol] !== BoardInfo.EMPTY) {
+        count++
+      }
+    })
+  })
+  return count
+}
+
 const GameContextProvider: React.FC<GameContextProps> = ({
   children,
   selectedBot
@@ -125,6 +138,25 @@ const GameContextProvider: React.FC<GameContextProps> = ({
       selectedBot
     })
   }, [selectedBot, history])
+
+  useEffect(() => {
+    if (gameState.status === 'FINISHED') {
+      const newMatch = {
+        botType: gameState.selectedBot,
+        status: gameState.hasWinner ? gameState.currentPlayer : 0,
+        drops: countBotDrops(gameState.board),
+        depth
+      }
+      matchesRef.push(newMatch)
+    }
+  }, [
+    gameState.status,
+    gameState.currentPlayer,
+    gameState.board,
+    gameState.selectedBot,
+    gameState.hasWinner,
+    depth
+  ])
 
   const dropPiece = useCallback(
     (indexPiece: number) => {
