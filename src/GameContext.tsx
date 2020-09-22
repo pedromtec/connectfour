@@ -14,7 +14,7 @@ import ConnectFourBoard, {
   BotInfo,
   countNoEmptyCells
 } from './utils/board'
-import { gridNoWinners } from './utils/mockGrids'
+import { initialStateBoard } from './utils/mockedGrids'
 import { useHistory } from 'react-router-dom'
 import { matchesRef } from './firebase'
 
@@ -41,7 +41,7 @@ const initialState: GameState = {
   currentPlayer: 1,
   selectedBot: BotInfo.MINIMAX,
   lastDrop: null,
-  board: gridNoWinners,
+  board: initialStateBoard,
   isAgentProcessing: false,
   status: 'NOT_INITIALIZED'
 }
