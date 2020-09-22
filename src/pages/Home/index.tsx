@@ -19,7 +19,7 @@ const Home: React.FC = () => {
           <Avatar bot={BotInfo.MINIMAX} withAnimation={true} />
           <S.FieldName>Sky Connect</S.FieldName>
           <S.FieldDescription>
-            &quot;Learn to play Connect Four with Sky Connect Bot&ldquo;
+            Learn to play Connect Four with <i>Sky Connect</i>.
           </S.FieldDescription>
           <Button
             fullWidth={true}
@@ -34,8 +34,8 @@ const Home: React.FC = () => {
           <Avatar bot={BotInfo.ALPHA_BETA} withAnimation={true} />
           <S.FieldName>Alpha Star</S.FieldName>
           <S.FieldDescription>
-            &quot;Are you looking for a challenge? Alpha Star can be a good
-            choice&ldquo;
+            Are you looking for a challenge? <i>Alpha Star</i> is the right
+            choice.
           </S.FieldDescription>
           <Button
             fullWidth={true}
