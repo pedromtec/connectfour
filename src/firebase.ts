@@ -15,6 +15,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 const databaseRef = firebase.database().ref()
-export const matchesRef = databaseRef.child('matches')
+export const matchesRef = databaseRef.child('results')
 
 export default firebase
