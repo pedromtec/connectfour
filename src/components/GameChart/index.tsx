@@ -16,10 +16,6 @@ export interface DataPoint {
   ties: number
 }
 
-interface Props {
-  data: DataPoint[]
-}
-
 const mediaQuery = '(min-width: 600px)'
 
 const mql = window.matchMedia(mediaQuery)
@@ -36,6 +32,10 @@ const mobileSize: WindowSize = {
 const desktopSize: WindowSize = {
   width: 600,
   height: 400
+}
+
+interface Props {
+  data: DataPoint[]
 }
 
 const GameChart: React.FC<Props> = ({ data }) => {
