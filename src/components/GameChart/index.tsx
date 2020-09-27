@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   BarChart,
   Bar,
@@ -20,11 +20,44 @@ interface Props {
   data: DataPoint[]
 }
 
+const mediaQuery = '(min-width: 600px)'
+
+const mql = window.matchMedia(mediaQuery)
+
+interface WindowSize {
+  width: number
+  height: number
+}
+const mobileSize: WindowSize = {
+  width: 350,
+  height: 250
+}
+
+const desktopSize: WindowSize = {
+  width: 600,
+  height: 400
+}
+
 const GameChart: React.FC<Props> = ({ data }) => {
+  const [size, setSize] = useState<WindowSize>(() => {
+    if (window.matchMedia(mediaQuery).matches) {
+      return desktopSize
+    }
+    return mobileSize
+  })
+  useEffect(() => {
+    mql.addListener((e) => {
+      if (e.matches) {
+        setSize(desktopSize)
+      } else {
+        setSize(mobileSize)
+      }
+    })
+  }, [])
   return (
     <BarChart
-      width={600}
-      height={400}
+      width={size.width}
+      height={size.height}
       data={data}
       margin={{
         top: 10,

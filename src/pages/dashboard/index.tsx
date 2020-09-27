@@ -47,7 +47,6 @@ const Dashboard: React.FC = () => {
       setMatches(Object.keys(items).map((key) => items[key]))
     })
   }, [])
-  console.log(matches?.length)
   return (
     <S.Container>
       <S.Wrapper>

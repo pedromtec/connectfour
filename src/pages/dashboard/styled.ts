@@ -17,4 +17,7 @@ export const Wrapper = styled.div`
 
 export const Title = styled.h2`
   padding-bottom: 1rem;
+  text-align: center;
+  padding-bottom: 1rem;
+  font-size: 1rem;
 `
