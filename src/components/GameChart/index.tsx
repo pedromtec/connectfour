@@ -9,28 +9,18 @@ import {
   Legend
 } from 'recharts'
 
-const data = [
-  {
-    name: 'Easy',
-    wins: 4000,
-    loses: 2400,
-    ties: 2400
-  },
-  {
-    name: 'Medium',
-    wins: 3000,
-    loses: 1398,
-    ties: 2210
-  },
-  {
-    name: 'Hard',
-    wins: 4000,
-    loses: 2400,
-    ties: 2400
-  }
-]
+export interface DataPoint {
+  name: string
+  wins: number
+  loses: number
+  ties: number
+}
 
-const GameBarChart: React.FC = () => {
+interface Props {
+  data: DataPoint[]
+}
+
+const GameChart: React.FC<Props> = ({ data }) => {
   return (
     <BarChart
       width={600}
@@ -55,4 +45,4 @@ const GameBarChart: React.FC = () => {
   )
 }
 
-export default GameBarChart
+export default GameChart

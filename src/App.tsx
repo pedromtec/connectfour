@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Game from './pages/Game'
 import Home from './pages/Home'
-import Dashboard from './pages/dashboard'
+import Dashboard from './pages/Dashboard'
 import { ThemeProvider } from 'styled-components'
 import dark from './styles/themes/dark'
 
