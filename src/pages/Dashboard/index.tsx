@@ -15,14 +15,14 @@ const getBotData = (botType: number, metrics: Metric[]): DataPoint[] => {
     if (!level) continue
     if (!countDataPoints[level.label]) {
       countDataPoints[level.label] = {
-        loses: 0,
+        losses: 0,
         wins: 0,
         ties: 0,
         name: level.label
       }
     }
     if (metric.status === 0) countDataPoints[level.label].ties++
-    else if (metric.status === 1) countDataPoints[level.label].loses++
+    else if (metric.status === 1) countDataPoints[level.label].losses++
     else countDataPoints[level.label].wins++
   }
   return [

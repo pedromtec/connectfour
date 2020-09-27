@@ -12,7 +12,7 @@ import {
 export interface DataPoint {
   name: string
   wins: number
-  loses: number
+  losses: number
   ties: number
 }
 
@@ -72,7 +72,7 @@ const GameChart: React.FC<Props> = ({ data }) => {
       <Tooltip />
       <Legend />
       <Bar dataKey="wins" fill="#50fa7b" />
-      <Bar dataKey="loses" fill="#ff5555" />
+      <Bar dataKey="losses" fill="#ff5555" />
       <Bar dataKey="ties" fill="#8be9fd" />
     </BarChart>
   )
