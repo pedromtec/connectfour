@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import Game from './pages/Game'
 import Home from './pages/Home'
+import Dashboard from './pages/Dashboard'
 import { ThemeProvider } from 'styled-components'
 import dark from './styles/themes/dark'
 
@@ -25,6 +26,7 @@ const App = () => {
           <Switch>
             <Route path="/" component={Home} exact />
             <Route path="/game" component={Game} />
+            <Route path="/dashboard" component={Dashboard} />
           </Switch>
         </BrowserRouter>
       </Layout>
