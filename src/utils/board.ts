@@ -45,7 +45,7 @@ function isOut(row: number, col: number) {
 export const countNoEmptyCells = (board: number[][]) => {
   let count = 0
   board.forEach((row, indexRow) => {
-    row.forEach((col, indexCol) => {
+    row.forEach((_, indexCol) => {
       if (board[indexRow][indexCol] !== BoardInfo.EMPTY) {
         count++
       }
