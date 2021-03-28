@@ -4,7 +4,7 @@ Connect Four is a two-player board game, in which the players choose a disk and 
 
 This project implements a strong `bot` to play this board game.
 
-![Image](./metadata/connectfour.png)
+![Image](./metadata/example.png)
 
 You can see the current game version [here](https://connectfour-ai.vercel.app/).
 
