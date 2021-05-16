@@ -25,9 +25,8 @@ const Menu: React.FC<Props> = ({ startGame, selectedBot }) => {
 
   const levels = BotLevels[selectedBot]
 
-  const [selectedLevel, setSelectedLevel] = useState<number | undefined>(
-    undefined
-  )
+  const [selectedLevel, setSelectedLevel] =
+    useState<number | undefined>(undefined)
 
   useEffect(() => {
     setSelectedLevel(levels[0].depth)
