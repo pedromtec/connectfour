@@ -7,10 +7,10 @@ import React, {
   useEffect,
   useState
 } from 'react'
-import axios from 'axios'
 import { createContext } from 'react'
 import ConnectFourBoard, { BoardInfo, BotInfo } from '../utils/board'
 import { initialStateBoard } from '../utils/mockedGrids'
+import { botService } from '../utils/botService'
 
 const DROP_PIECE = 'DROP_PIECE'
 const START = 'START'
@@ -166,20 +166,18 @@ const GameContextProvider: React.FC<GameContextProps> = ({
       dispatch({
         type: AGENT_PROCESSING
       })
-      axios
-        .post(`https://connectfour-api.herokuapp.com/move`, {
-          bot: gameState.selectedBot,
-          board: gameState.board,
-          depth
-        })
-        .then(({ data }) => {
-          setTimeout(() => {
-            dispatch({
-              type: DROP_PIECE,
-              col: data.column
-            })
-          }, 1000)
-        })
+      botService({
+        bot: gameState.selectedBot,
+        board: gameState.board,
+        depth
+      }).then((column) => {
+        setTimeout(() => {
+          dispatch({
+            type: DROP_PIECE,
+            col: column
+          })
+        }, 1000)
+      })
     }
   }, [
     gameState.currentPlayer,
