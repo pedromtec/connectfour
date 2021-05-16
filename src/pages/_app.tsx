@@ -6,6 +6,7 @@ import GlobalStyle from '../styles/global'
 import Header from '../components/Header'
 import { Layout } from '../components/Layout'
 import ReactGa from 'react-ga'
+import NextNprogress from 'nextjs-progressbar'
 
 const MyApp = ({ Component, pageProps }) => {
   useEffect(() => {
@@ -17,6 +18,12 @@ const MyApp = ({ Component, pageProps }) => {
     <ThemeProvider theme={dark}>
       <Layout>
         <GlobalStyle />
+        <NextNprogress
+          color="#bd93f9"
+          startPosition={0.3}
+          stopDelayMs={200}
+          height={3}
+        />
         <>
           <Header />
           <Component {...pageProps} />
