@@ -1,4 +1,4 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Document, { Html, Main, NextScript, Head } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 import { ServerStyleSheets } from '@material-ui/styles'
 
@@ -33,13 +33,8 @@ export default class MyDocument extends Document {
   }
   render() {
     return (
-      <Html>
-        <Head>
-          <link
-            href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
-            rel="stylesheet"
-          />
-        </Head>
+      <Html lang="en-US">
+        <Head></Head>
         <body>
           <Main />
           <NextScript />
