@@ -1,13 +1,12 @@
 import React from 'react'
-
 import { Container } from './styles'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 
 const Header: React.FC = () => {
   return (
     <Container>
-      <Link to="/" style={{ textDecoration: 'none', color: '#FFF' }}>
-        ConnectFour
+      <Link href="/">
+        <a style={{ textDecoration: 'none', color: '#FFF' }}>ConnectFour</a>
       </Link>
     </Container>
   )

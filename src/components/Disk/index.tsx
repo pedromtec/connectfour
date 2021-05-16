@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from 'react'
-import { GameContext } from '../../GameContext'
+import { GameContext } from '../../contexts/GameContext'
 import Disk, { AnimationType } from './Disk'
 
 const colors: Record<number, string> = {

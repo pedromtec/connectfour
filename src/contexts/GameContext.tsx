@@ -9,9 +9,8 @@ import React, {
 } from 'react'
 import axios from 'axios'
 import { createContext } from 'react'
-import ConnectFourBoard, { BoardInfo, BotInfo } from './utils/board'
-import { initialStateBoard } from './utils/mockedGrids'
-import { useHistory } from 'react-router-dom'
+import ConnectFourBoard, { BoardInfo, BotInfo } from '../utils/board'
+import { initialStateBoard } from '../utils/mockedGrids'
 
 const DROP_PIECE = 'DROP_PIECE'
 const START = 'START'
@@ -111,17 +110,13 @@ const GameContextProvider: React.FC<GameContextProps> = ({
 }) => {
   const [gameState, dispatch] = useReducer(reducer, initialState)
   const [depth, setDepth] = useState<number | undefined>(undefined)
-  const history = useHistory()
 
   useEffect(() => {
-    if (!selectedBot) {
-      history.push('/')
-    }
     dispatch({
       type: SET_BOT,
       selectedBot
     })
-  }, [selectedBot, history])
+  }, [selectedBot])
 
   const dropPiece = useCallback(
     (indexPiece: number) => {
