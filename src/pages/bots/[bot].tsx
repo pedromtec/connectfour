@@ -102,7 +102,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const { bot } = ctx.params
   return {
     props: {
-      bot
+      bot: Number(bot)
     }
   }
 }

@@ -28,7 +28,6 @@ const HeaderStatus: React.FC<Props> = ({
   status
 }) => {
   const isRunning = status === 'RUNNING'
-
   return (
     <S.Container>
       <S.Wrapper>
