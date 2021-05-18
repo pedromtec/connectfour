@@ -15,6 +15,7 @@
     "react-ga": "^3.1.2",
     "react-lottie": "^1.2.3",
     "react-spring": "^8.0.27",
+    "recharts": "^2.0.9",
     "renature": "^0.6.2",
     "styled-components": "^5.1.1"
   },
