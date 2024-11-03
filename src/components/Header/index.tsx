@@ -6,7 +6,7 @@ const Header: React.FC = () => {
   return (
     <Container>
       <Link href="/">
-        <a style={{ textDecoration: 'none', color: '#FFF' }}>ConnectFour</a>
+        <a style={{ textDecoration: 'none', color: '#FFF' }}>Connect 4</a>
       </Link>
     </Container>
   )

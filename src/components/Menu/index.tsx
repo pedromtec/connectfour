@@ -41,10 +41,10 @@ const Menu: React.FC<Props> = ({ startGame, selectedBot }) => {
 
   return (
     <Dialog aria-labelledby="dialog-title" open={dialogIsOpen}>
-      <DialogTitle>A new game will start!</DialogTitle>
+      <DialogTitle>Uma nova partida vai começar!</DialogTitle>
       <FormControl>
         <FieldContainer>
-          <FormLabel component="legend">Who starts?</FormLabel>
+          <FormLabel component="legend">Quem começa?</FormLabel>
           <RadioGroup
             row
             aria-label="position"
@@ -56,17 +56,17 @@ const Menu: React.FC<Props> = ({ startGame, selectedBot }) => {
             <FormControlLabel
               value={1}
               control={<Radio color="primary" />}
-              label="You"
+              label="Você"
             />
             <FormControlLabel
               value={2}
               control={<Radio color="primary" />}
-              label="Machine"
+              label="IA"
             />
           </RadioGroup>
         </FieldContainer>
         <FieldContainer>
-          <FormLabel component="legend">Level</FormLabel>
+          <FormLabel component="legend">Nível de dificuldade</FormLabel>
           <Select
             labelId="select-label"
             id="select"
@@ -87,7 +87,7 @@ const Menu: React.FC<Props> = ({ startGame, selectedBot }) => {
             color="primary"
             onClick={handleClick}
           >
-            Start
+            Começar
           </Button>
         </FieldContainer>
       </FormControl>
