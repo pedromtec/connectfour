@@ -37,7 +37,7 @@ const HeaderStatus: React.FC<Props> = ({
             isStopped={!isRunning || player !== BoardInfo.PLAYER}
           />
         </S.AvatarContainer>
-        {isAgentProcessing && <Loading message="loading..." />}
+        {isAgentProcessing && <Loading message="Pensando..." />}
         <S.AvatarContainer paddingBottom={false}>
           <Lottie
             options={{

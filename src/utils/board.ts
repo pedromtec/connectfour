@@ -21,14 +21,14 @@ export const BoardInfo = {
 
 export const BotLevels = {
   [BotInfo.MINIMAX]: [
-    { depth: 3, label: 'Easy' },
-    { depth: 4, label: 'Medium' },
-    { depth: 5, label: 'Hard' }
+    { depth: 3, label: 'Fácil' },
+    { depth: 4, label: 'Médil' },
+    { depth: 5, label: 'Difícil' }
   ],
   [BotInfo.ALPHA_BETA]: [
-    { depth: 5, label: 'Easy' },
-    { depth: 6, label: 'Medium' },
-    { depth: 7, label: 'Hard' }
+    { depth: 5, label: 'Fácil' },
+    { depth: 6, label: 'Médio' },
+    { depth: 7, label: 'Difícil' }
   ]
 }
 

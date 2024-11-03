@@ -26,7 +26,6 @@ const MyApp = ({ Component, pageProps }) => {
           height={3}
         />
         <Head>
-          <title>Connect four game</title>
           <link
             href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
             rel="stylesheet"
@@ -34,7 +33,6 @@ const MyApp = ({ Component, pageProps }) => {
           <link rel="shortcut icon" href="/img/icon-192.png" />
           <link rel="shortcut icon" href="/img/icon-192.png" />
           <link rel="manifest" href="/manifest.json" />
-          <meta name="description" content="Connect Four game" />
           <meta name="theme-color" />
         </Head>
         <>

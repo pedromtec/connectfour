@@ -8,6 +8,7 @@ import Menu from '../../components/Menu'
 import styled from 'styled-components'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { BotInfo } from '../../utils/board'
+import { NextSeo } from 'next-seo'
 
 export const GameWrapper = styled.div`
   display: flex;
@@ -47,31 +48,37 @@ const Game = () => {
   const { gameState, startGame, restartGame } = useGameContext()
 
   return (
-    <GameContainer>
-      {gameState.status === 'NOT_INITIALIZED' && (
-        <Menu startGame={startGame} selectedBot={gameState.selectedBot} />
-      )}
-      <GameWrapper>
-        <HeaderStatus
-          player={gameState.currentPlayer}
-          isAgentProcessing={gameState.isAgentProcessing}
-          selectedBot={gameState.selectedBot}
-          status={gameState.status}
-        />
+    <>
+      <NextSeo
+        title="Connect 4 - Você vs IA"
+        description="Desafie-se em uma partida de Connect 4 online! Encare o tabuleiro e teste suas habilidades de estratégia agora mesmo. Escolha o nível de dificuldade e divirta-se."
+      />
+      <GameContainer>
+        {gameState.status === 'NOT_INITIALIZED' && (
+          <Menu startGame={startGame} selectedBot={gameState.selectedBot} />
+        )}
+        <GameWrapper>
+          <HeaderStatus
+            player={gameState.currentPlayer}
+            isAgentProcessing={gameState.isAgentProcessing}
+            selectedBot={gameState.selectedBot}
+            status={gameState.status}
+          />
 
-        <Board grid={gameState.board} />
-        <ButtonWrapper>
-          <Button
-            fullWidth={true}
-            variant="contained"
-            color="primary"
-            onClick={restartGame}
-          >
-            {gameState.status === 'FINISHED' ? 'New game' : 'Restart'}
-          </Button>
-        </ButtonWrapper>
-      </GameWrapper>
-    </GameContainer>
+          <Board grid={gameState.board} />
+          <ButtonWrapper>
+            <Button
+              fullWidth={true}
+              variant="contained"
+              color="primary"
+              onClick={restartGame}
+            >
+              {gameState.status === 'FINISHED' ? 'Novo jogo' : 'Recomeçar'}
+            </Button>
+          </ButtonWrapper>
+        </GameWrapper>
+      </GameContainer>
+    </>
   )
 }
 
