@@ -2,6 +2,9 @@
   "name": "connectfour-ai",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "18.x"
+  },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@types/recharts": "^1.8.15",
